@@ -4,7 +4,7 @@ package com.example.onlinemarketbe.config;
 import com.example.onlinemarketbe.security.jwt.AuthEntryPointJwt;
 import com.example.onlinemarketbe.security.jwt.AuthTokenFilter;
 
-import com.example.onlinemarketbe.services.CustomUserDetailsService;
+import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 

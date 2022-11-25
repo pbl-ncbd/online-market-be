@@ -57,9 +57,12 @@ public class UserDetailsImpl implements UserDetails {
    * @deprecated Some javadoc.
    */
   public static UserDetailsImpl build(int id, String username, String password, Set<Role> roles) {
+    for (Role r: roles){
+      System.out.println(r.getName().name());
 
+    }
 
-    List<GrantedAuthority> authorities = roles.stream()
+    List<SimpleGrantedAuthority> authorities = roles.stream()
             .map(role -> new SimpleGrantedAuthority(role.getName().name()))
             .collect(Collectors.toList());
 
@@ -71,6 +74,7 @@ public class UserDetailsImpl implements UserDetails {
 //                                                          + role.toUpperCase());
 //    List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<>();
 //    updatedAuthorities.add(authority);
+
     return new UserDetailsImpl(id, username, password, authorities);
   }
 

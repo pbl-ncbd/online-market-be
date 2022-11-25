@@ -1,4 +1,4 @@
-package com.example.onlinemarketbe.services;
+package com.example.onlinemarketbe.services.impl;
 
 import com.example.onlinemarketbe.common.UserDetailsImpl;
 import com.example.onlinemarketbe.model.ERole;
@@ -6,6 +6,7 @@ import com.example.onlinemarketbe.model.Role;
 import com.example.onlinemarketbe.model.User;
 import com.example.onlinemarketbe.repositories.RoleRepository;
 import com.example.onlinemarketbe.repositories.UserRepository;
+import com.example.onlinemarketbe.services.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,7 +43,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return UserDetailsImpl.build(user.getId(), user.getUsername(), user.getPassword(), user.getRoles());
+        return UserDetailsImpl.build(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getRoles());
     }
 
     /**
@@ -88,20 +92,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         try {
             User existedUser = userRepo.findUserByUsername(username);
-            System.out.println(userRepo.findUserByUsername(username));
             if (existedUser == null) {
+                User user = new User();
                 Set<Role> roles = new HashSet<>();
                 Role userRole = roleService.findRoleByName(ERole.ROLE_BUYER);
                 roles.add(userRole);
-                User user = new User();
                 user.setUsername(username);
                 BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
                 String encodedPassword = passwordEncoder.encode(password);
                 user.setPassword(encodedPassword);
                 user.setRoles(roles);
                 userRepo.save(user);
-
-                logger.info("Created " + user.getRoles().toArray() + " " + user.getId());
+                logger.info("Created success new user: " + user.getId());
                 return 1;
             } else {
                 logger.info("Username is existed: " + existedUser.getUsername());
