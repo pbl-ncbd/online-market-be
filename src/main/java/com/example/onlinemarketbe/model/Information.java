@@ -25,7 +25,7 @@ public class Information {
     private String phone;
     @Column
     @NotNull
-    private Date timeStart;
+    private Date birthDate;
     @ManyToOne
     @JoinColumn(name = "address_id")
     Address address;

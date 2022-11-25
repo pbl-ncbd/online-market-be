@@ -17,7 +17,7 @@ public class Identity {
     @Column
     @NotNull
     @Size(max = 255)
-    private String idCart;
+    private String idCard;
     @Column
     @NotNull
     @Size(max = 255)

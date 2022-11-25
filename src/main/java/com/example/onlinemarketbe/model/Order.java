@@ -22,11 +22,11 @@ public class Order {
     @JoinColumn(name = "payment_id")
     Payment payment;
     @ManyToOne
-    @JoinColumn(name = "user_id_buyer")
-    User userBuyer;
+    @JoinColumn(name = "buyer_id")
+    User buyer;
     @ManyToOne
-    @JoinColumn(name = "user_id_saler")
-    User userSaler;
+    @JoinColumn(name = "seller_id")
+    User seller;
     @Column
     @NotNull
     private Date dateOrder;

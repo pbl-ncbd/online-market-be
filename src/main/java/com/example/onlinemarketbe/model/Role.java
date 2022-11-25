@@ -15,9 +15,9 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
-    @NotNull
-    @Size(max = 255)
-    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 
 }
