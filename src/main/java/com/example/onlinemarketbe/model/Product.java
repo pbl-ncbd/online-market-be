@@ -15,7 +15,7 @@ public class Product {
     private int id;
     @ManyToOne
     @JoinColumn(name = "category_id")
-    Categoty categoty;
+    Category category;
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
@@ -32,7 +32,7 @@ public class Product {
     private String describe;
     @Column
     @NotNull
-    private int number;
+    private int quantity;
     @Column
     @NotNull
     private boolean status;

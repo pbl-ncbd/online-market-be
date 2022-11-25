@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
-public class Categoty {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
