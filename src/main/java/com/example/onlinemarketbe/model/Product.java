@@ -9,13 +9,14 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "category_id")
-    Categoty categoty;
+    Category category;
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
@@ -29,10 +30,10 @@ public class Product {
     @Column
     @NotNull
     @Size(max = 255)
-    private String describe;
+    private String description;
     @Column
     @NotNull
-    private int number;
+    private int quantity;
     @Column
     @NotNull
     private boolean status;
