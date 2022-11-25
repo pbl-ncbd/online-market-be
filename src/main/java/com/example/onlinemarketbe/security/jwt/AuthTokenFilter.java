@@ -1,7 +1,7 @@
 package com.example.onlinemarketbe.security.jwt;
 
 
-import com.example.onlinemarketbe.services.CustomUserDetailsService;
+import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         logger.info("Auth token filter: jwt = " + jwt);
         if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
           String username = jwtUtils.getUserNameFromJwtToken(jwt);
-
           UserDetails userDetails = userDetailsService
                                     .loadUserByUsername(username);
 

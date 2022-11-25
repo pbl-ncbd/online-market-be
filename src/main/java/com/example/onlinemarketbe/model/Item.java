@@ -4,12 +4,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 @Entity
-public class OrderProduct {
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -20,15 +19,15 @@ public class OrderProduct {
     @NotNull
     private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    Order order;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     Product product;
     @ManyToOne
     @JoinColumn(name = "type_id")
     Type type;
-
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = true)
+    private Order order;
 
 }

@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,7 @@ public class Product {
     @Column
     @NotNull
     @Size(max = 255)
-    private String describe;
+    private String description;
     @Column
     @NotNull
     private int quantity;

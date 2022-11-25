@@ -9,7 +9,7 @@ import com.example.onlinemarketbe.payload.request.SignupRequest;
 import com.example.onlinemarketbe.payload.response.MessageResponse;
 import com.example.onlinemarketbe.payload.response.UserInfoResponse;
 import com.example.onlinemarketbe.security.jwt.JwtUtils;
-import com.example.onlinemarketbe.services.CustomUserDetailsService;
+import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Some javadoc. // OK
@@ -52,7 +50,6 @@ public class AuthController {
     
     @Autowired
     JwtUtils jwtUtils;
-    
 
     /**
      * Some javadoc. // OK
@@ -66,7 +63,7 @@ public class AuthController {
     @ApiOperation (value = "20/11/2022 by Vuong : signup new account teacher")
     @PostMapping ("/register")
     public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signupRequest) {
-        try {
+
             if (customUserDetailsService.registerUser(signupRequest.getUsername(),
                     signupRequest.getPassword()) == 1) {
                 LoginRequest loginRequest =
@@ -75,12 +72,9 @@ public class AuthController {
 
                 return authenticateUser(loginRequest);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            return ResponseEntity.ok().body(new MessageResponse("Register failed"));
+
+            return ResponseEntity.ok().body(new MessageResponse("register failed"));
         }
-    }
 
 
 
@@ -146,7 +140,7 @@ public class AuthController {
      * @serialData
      * @deprecated Some javadoc.
      */
-    @PreAuthorize ("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
+    @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @ApiOperation (value = "20/11/2022 by Vuong : logout ")
     @PostMapping ("/logout")
     public ResponseEntity<?> logoutUser() {
