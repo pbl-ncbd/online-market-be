@@ -30,7 +30,7 @@ public class User {
 
     @Column
     @NotNull
-    private boolean status;
+    private boolean active;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable( name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

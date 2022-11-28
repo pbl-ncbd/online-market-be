@@ -34,4 +34,7 @@ public class Identity {
     @JoinColumn(name = "user_id")
     User user;
 
+    @Column
+    private boolean confirm;
+
 }
