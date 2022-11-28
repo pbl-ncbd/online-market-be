@@ -41,4 +41,7 @@ public class Identity {
     private boolean confirmed;
 
 
+    @Column
+    private boolean confirm;
+
 }
