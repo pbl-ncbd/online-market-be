@@ -15,14 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-/**
- * Some javadoc. // OK
- *
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
-@SuppressWarnings({"checkstyle:Indentation", "checkstyle:FileTabCharacter"})
+
 @CrossOrigin()
 @Component
 public class JwtUtils {
@@ -40,13 +33,7 @@ public class JwtUtils {
   @Value("${onlinemarketbe.app.jwtCookieName}")
   private String jwtCookie;
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022
-   * @deprecated Some javadoc.
-   */
+
   public String getJwtFromCookies(HttpServletRequest request) {
     Cookie cookie = WebUtils.getCookie(request, jwtCookie);
     if (cookie != null) {
@@ -56,13 +43,7 @@ public class JwtUtils {
     }
   }
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022
-   * @deprecated Some javadoc.
-   */
+
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsername(userPrincipal.getUsername());
     ResponseCookie cookie = ResponseCookie
@@ -73,13 +54,7 @@ public class JwtUtils {
     return cookie;
   }
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022
-   * @deprecated Some javadoc.
-   */
+
   public ResponseCookie getCleanJwtCookie() {
 
     logger.info("Jwt utils clean");
@@ -92,13 +67,7 @@ public class JwtUtils {
   }
 
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022
-   * @deprecated Some javadoc.
-   */
+
   public String getUserNameFromJwtToken(String token) {
     return Jwts
             .parser()
@@ -108,13 +77,7 @@ public class JwtUtils {
             .getSubject();
   }
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022
-   * @deprecated Some javadoc.
-   */
+
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts
@@ -137,13 +100,7 @@ public class JwtUtils {
     return false;
   }
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022
-   * @deprecated Some javadoc.
-   */
+
   public String generateTokenFromUsername(String username) {
     return Jwts.builder()
             .setSubject(username)

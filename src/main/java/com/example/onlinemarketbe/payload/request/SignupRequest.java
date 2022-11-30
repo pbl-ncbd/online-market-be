@@ -1,29 +1,19 @@
 package com.example.onlinemarketbe.payload.request;
 
-import io.swagger.annotations.ApiModelProperty;
-
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
-/**
- * Some javadoc. // OK
- *
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
-@SuppressWarnings("checkstyle:Indentation")
 public class SignupRequest {
 
     @NotNull(message = "This is username")
-    @ApiModelProperty(notes = "username, this username must e more than 5 char", example = "adminserver", required = true)
+    @Schema(title = "username, this username must e more than 5 char", example = "adminserver")
     @Size(min = 5, max = 50, message = "this username must e more than 5 char")
     private String username;
 
     @NotNull(message = "This is password, this password must e more than 8 char")
-    @ApiModelProperty(notes = "password", example = "adminserver", required = true)
+    @Schema(title = "password", example = "adminserver")
     @Size(min = 8, max = 40, message = "this password must e more than 8 char")
     private String password;
 

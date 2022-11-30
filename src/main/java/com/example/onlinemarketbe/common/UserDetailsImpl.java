@@ -9,15 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Some javadoc. // OK
- *
- * @author Vuong  
- * @version Some javadoc.
- * @since 20/11/2022  
- * @serial Some javadoc.  
- * @deprecated Some javadoc.  
- */
+
 public class UserDetailsImpl implements UserDetails {
 
   private final int userId;
@@ -31,14 +23,7 @@ public class UserDetailsImpl implements UserDetails {
 
   private final Collection<? extends GrantedAuthority> authorities;
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022  
-   * @serialData  
-   * @deprecated Some javadoc.  
-   */
+
   public UserDetailsImpl(int id, String username, String password,
                       Collection<? extends GrantedAuthority> authorities) {
     this.userId = id;
@@ -48,14 +33,7 @@ public class UserDetailsImpl implements UserDetails {
     this.authorities = authorities;
   }
 
-  /**
-   * Some javadoc. // OK
-   *
-   * @author Vuong
-   * @since 20/11/2022
-   * @serialData
-   * @deprecated Some javadoc.
-   */
+
   public static UserDetailsImpl build(int id, String username, String password, Set<Role> roles) {
     for (Role r: roles){
       System.out.println(r.getName().name());
@@ -65,15 +43,6 @@ public class UserDetailsImpl implements UserDetails {
     List<SimpleGrantedAuthority> authorities = roles.stream()
             .map(role -> new SimpleGrantedAuthority(role.getName().name()))
             .collect(Collectors.toList());
-
-//    List<SimpleGrantedAuthority> authorities =  roles.stream()
-//                      .map(SimpleGrantedAuthority::new)
-//                      .collect(Collectors.toList());
-
-//    SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"
-//                                                          + role.toUpperCase());
-//    List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<>();
-//    updatedAuthorities.add(authority);
 
     return new UserDetailsImpl(id, username, password, authorities);
   }

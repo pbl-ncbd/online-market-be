@@ -4,12 +4,10 @@ import com.example.onlinemarketbe.common.UserDetailsImpl;
 import com.example.onlinemarketbe.model.ERole;
 import com.example.onlinemarketbe.model.Role;
 import com.example.onlinemarketbe.model.User;
-import com.example.onlinemarketbe.repositories.RoleRepository;
 import com.example.onlinemarketbe.repositories.UserRepository;
 import com.example.onlinemarketbe.services.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,23 +17,19 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-/** Some javadoc. // OK
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
-@SuppressWarnings({"checkstyle:Indentation"})
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
-    @Autowired
-    UserRepository userRepo;
+    private final UserRepository userRepo;
 
-    @Autowired
-    RoleRepository roleRepository;
+    private final RoleService roleService;
 
-    @Autowired
-    RoleService roleService;
+    CustomUserDetailsService(UserRepository userRepo,
+                             RoleService roleService){
+        this.roleService = roleService;
+        this.userRepo = userRepo;
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -50,13 +44,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getRoles());
     }
 
-    /**
-     * Some javadoc. // OK
-     *
-     * @author Vuong
-     * @since 20/11/2022
-     * @deprecated Some javadoc.
-     */
+
     public int loadUserIdByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findUserByUsername(username);
         if (user == null) {
@@ -66,13 +54,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
 
-    /**
-     * Some javadoc. // OK
-     *
-     * @author Vuong
-     * @since 20/11/2022
-     * @deprecated Some javadoc.
-     */
     public User findUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findUserByUsername(username);
         if (user == null) {
@@ -81,13 +62,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user;
     }
 
-    /**
-     * Some javadoc. // OK
-     *
-     * @author Vuong
-     * @since 20/11/2022
-     * @deprecated Some javadoc.
-     */
+
     public int registerUser(String username, String password) {
 
         try {
@@ -114,6 +89,5 @@ public class CustomUserDetailsService implements UserDetailsService {
             return 0;
         }
     }
-
 
 }

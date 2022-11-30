@@ -1,26 +1,20 @@
 package com.example.onlinemarketbe.payload.request;
 
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
-/**
- * Some javadoc. // OK
- *
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
+
 @Data
-@SuppressWarnings({"checkstyle:Indentation"})
 public class LoginRequest {
 	@NotNull(message = "This is username")
-	@ApiModelProperty(notes = "username", example = "adminserver", required = true)
+	@Schema(title = "username", example = "adminserver")
 	private String username;
 
 	@NotNull(message = "This is password")
-	@ApiModelProperty(notes = "password", example = "adminserver", required = true)
+	@Schema(title = "password", example = "adminserver")
 	private String password;
 
 	public LoginRequest(String username, String password) {
