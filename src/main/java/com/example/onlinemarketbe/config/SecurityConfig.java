@@ -5,7 +5,6 @@ import com.example.onlinemarketbe.security.jwt.AuthEntryPointJwt;
 import com.example.onlinemarketbe.security.jwt.AuthTokenFilter;
 
 import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
 import org.springframework.context.annotation.Configuration;
@@ -18,19 +17,11 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-/**
- * Some javadoc. // OK
- *
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
-@SuppressWarnings({"checkstyle:Indentation", "checkstyle:JavadocVariable"})
+
 
 @Configuration
 @EnableWebSecurity
@@ -41,27 +32,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired
-    AuthEntryPointJwt unauthorizedHandler;
+    private final AuthEntryPointJwt unauthorizedHandler;
+
+    private final CustomUserDetailsService customUserDetailsService;
+
+    private final AuthTokenFilter authTokenFilter;
+
+    SecurityConfig(AuthEntryPointJwt unauthorizedHandler,
+                   CustomUserDetailsService customUserDetailsService,
+                   AuthTokenFilter authTokenFilter){
+        this.customUserDetailsService = customUserDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+        this.authTokenFilter = authTokenFilter;
+
+    }
+
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }
-
-//    @Autowired
-//    UserDetailsService CustomUserDetailsService;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider =
                 new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(customUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -73,10 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter();
-    }
+
 
 
     @Override
@@ -95,7 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @SuppressWarnings("checkstyle:JavadocVariable")
     private static final String[] AUTH_WHITELIST = {
         // -- Swagger UI v2
         "/v2/api-docs",
@@ -132,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-        http.addFilterBefore(authenticationJwtTokenFilter(),
+        http.addFilterBefore(authTokenFilter,
                 UsernamePasswordAuthenticationFilter.class);
     }
 }

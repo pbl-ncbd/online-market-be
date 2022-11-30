@@ -10,8 +10,8 @@ import com.example.onlinemarketbe.payload.response.MessageResponse;
 import com.example.onlinemarketbe.payload.response.UserInfoResponse;
 import com.example.onlinemarketbe.security.jwt.JwtUtils;
 import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -28,39 +28,29 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Objects;
 
-/**
- * Some javadoc. // OK
- *
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
-@SuppressWarnings("checkstyle:Indentation")
+
 @CrossOrigin ()
 @RestController
 @RequestMapping ("/api/auth")
-@Api (tags = "api/auth")
+@Tag(name = "api/auth")
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    CustomUserDetailsService customUserDetailsService;
-    
-    @Autowired
-    JwtUtils jwtUtils;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    /**
-     * Some javadoc. // OK
-     *
-     * @author Vuong
-     * @since 20/11/2022
-     * @serialData
-     * @deprecated Some javadoc.
-     */
+    private final JwtUtils jwtUtils;
 
-    @ApiOperation (value = "20/11/2022 by Vuong : signup new account teacher")
+    AuthController(AuthenticationManager authenticationManager,
+                   CustomUserDetailsService customUserDetailsService,
+                   JwtUtils jwtUtils) {
+        this.authenticationManager = authenticationManager;
+        this.customUserDetailsService = customUserDetailsService;
+        this.jwtUtils = jwtUtils;
+    }
+
+
+    @Operation(summary = "20/11/2022 by Vuong : signup new account teacher")
     @PostMapping ("/register")
     public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signupRequest) {
 
@@ -78,15 +68,7 @@ public class AuthController {
 
 
 
-    /**
-     * Some javadoc. // OK
-     *
-     * @author Vuong
-     * @since 20/11/2022
-     * @serialData
-     * @deprecated Some javadoc.
-     */
-    @ApiOperation (value = "20/11/2022 by Vuong : login ")
+    @Operation(summary = "20/11/2022 by Vuong : login ")
     @PostMapping ("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         try {
@@ -115,15 +97,8 @@ public class AuthController {
 
     }
 
-    /**
-     * Some javadoc. // OK
-     *
-     * @author Vuong
-     * @since 20/11/2022
-     * @serialData
-     * @deprecated Some javadoc.
-     */
-    @ApiOperation (value = "20/11/2022 by Vuong : get current user ")
+
+    @Operation(summary = "20/11/2022 by Vuong : get current user ")
     @GetMapping("/current")
     public ResponseEntity<?> currentUserName(Principal principal) {
         return ResponseEntity.ok()
@@ -132,16 +107,9 @@ public class AuthController {
                                 () -> new MessageResponse("Don't exist user now")));
     }
 
-    /**
-     * Some javadoc. // OK
-     *
-     * @author Vuong
-     * @since 20/11/2022
-     * @serialData
-     * @deprecated Some javadoc.
-     */
+
     @PreAuthorize ("hasRole('ROLE_ADMIN')")
-    @ApiOperation (value = "20/11/2022 by Vuong : logout ")
+    @Operation(summary = "20/11/2022 by Vuong : logout ")
     @PostMapping ("/logout")
     public ResponseEntity<?> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
