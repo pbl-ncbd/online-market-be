@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,21 +20,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-/**
- * Some javadoc. // OK
- *
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
-@SuppressWarnings({"checkstyle:Indentation", "checkstyle:FileTabCharacter"})
+@Component
 public class AuthTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtils jwtUtils;
+    private final  JwtUtils jwtUtils;
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private final  CustomUserDetailsService userDetailsService;
+
+    AuthTokenFilter(JwtUtils jwtUtils,
+                    CustomUserDetailsService userDetailsService){
+        this.jwtUtils = jwtUtils;
+        this.userDetailsService = userDetailsService;
+    }
+
 
     private static final Logger logger = LoggerFactory
                                           .getLogger(AuthTokenFilter.class);
