@@ -70,7 +70,6 @@ public class InformationRequest {
     }
 
 
-
     @NotNull
     @Schema(title = "district")
     private District district;
