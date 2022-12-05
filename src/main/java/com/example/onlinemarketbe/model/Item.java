@@ -19,15 +19,17 @@ public class Item {
     @NotNull
     private int quantity;
 
-
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @OneToOne
     @JoinColumn(name = "product_id")
     Product product;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "type_id")
     Type type;
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = true)
+    @JoinColumn(name = "order_id")
     private Order order;
 
 }
