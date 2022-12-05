@@ -35,6 +35,4 @@ public class Information {
     @NotNull
     private String address;
 
-
-
 }

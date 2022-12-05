@@ -1,11 +1,9 @@
 package com.example.onlinemarketbe.model;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,9 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
-
 public class User {
 
     @Id
@@ -34,9 +30,7 @@ public class User {
     Information information;
     @Column
     @NotNull
-
     private boolean active;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable( name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
