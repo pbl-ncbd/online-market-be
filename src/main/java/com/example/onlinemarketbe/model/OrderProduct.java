@@ -1,5 +1,4 @@
 package com.example.onlinemarketbe.model;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,21 +9,26 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
-public class Role {
-
+public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-<<<<<<< HEAD
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private ERole name;
-=======
     @Column
     @NotNull
-    @Size(max = 255)
-    private String name;
->>>>>>> a4af00c (create model)
+    private double totalPrice;
+    @Column
+    @NotNull
+    private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    Order order;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    Product product;
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    Type type;
+
 
 }

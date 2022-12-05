@@ -1,16 +1,16 @@
 package com.example.onlinemarketbe.model;
+
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Date;
 
 @Getter
 @Setter
 @Entity
-public class Information {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,29 +18,9 @@ public class Information {
     @Column
     @NotNull
     @Size(max = 255)
-    private String name;
+    private String province_city;
     @Column
     @NotNull
     @Size(max = 255)
-    private String phone;
-    @Column
-    @NotNull
-<<<<<<< HEAD
-    private Date birthDate;
-
-    @ManyToOne
-    @JoinColumn(name = "district_id")
-    private District district;
-
-    @Column
-    @NotNull
     private String address;
-=======
-    private Date timeStart;
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    Address address;
->>>>>>> a4af00c (create model)
-
-
 }

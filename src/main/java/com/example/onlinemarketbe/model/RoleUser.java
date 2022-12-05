@@ -1,5 +1,4 @@
 package com.example.onlinemarketbe.model;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,24 +6,18 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class Role {
-
+public class RoleUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-<<<<<<< HEAD
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private ERole name;
-=======
-    @Column
-    @NotNull
-    @Size(max = 255)
-    private String name;
->>>>>>> a4af00c (create model)
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    Role role;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
 }
