@@ -3,14 +3,12 @@ package com.example.onlinemarketbe.controllers;
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
 import com.example.onlinemarketbe.services.ImgService;
-import com.example.onlinemarketbe.services.ProductService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
+import com.example.onlinemarketbe.services.impl.ProductServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @CrossOrigin()
@@ -18,10 +16,16 @@ import java.security.Principal;
 @RequestMapping("/api/auth")
 
 public class ProductController {
-    @Autowired
-    ProductService productService;
-    @Autowired
-    ImgService imgService;
+
+    private final ProductServiceImpl productService;
+
+    private final ImgService imgService;
+
+    public ProductController(ProductServiceImpl productService, ImgService imgService) {
+        this.productService = productService;
+        this.imgService = imgService;
+    }
+
     @PostMapping("/create-product")
     public ResponseEntity<?> createProduct(Principal principal, @RequestBody CreateProductRequest createProductRequest)
     {
@@ -52,6 +56,28 @@ public class ProductController {
             return ResponseEntity.ok(productService.deleteProduct(principal.getName(), id));
         }catch (Exception e)
         {
+            return ResponseEntity.ok(e);
+        }
+    }
+
+    @GetMapping("/search-product/{keyword}")
+    @Operation(summary = "05/12/2022 by Linh : This is find product by name or category name")
+    public ResponseEntity<?> searchProduct(@PathVariable String keyword){
+        try{
+            return ResponseEntity.ok(productService.searchProduct(keyword));
+        }
+        catch (Exception e){
+            return ResponseEntity.ok(e);
+        }
+    }
+
+    @GetMapping("/search-product-by-category-id/{id}")
+    @Operation(summary = "05/12/2022 by Linh : This is find product by category")
+    public ResponseEntity<?> searchProductByCategory(@PathVariable @Valid int id){
+        try{
+            return ResponseEntity.ok(productService.searchProductByCategory(id));
+        }
+        catch (Exception e){
             return ResponseEntity.ok(e);
         }
     }
