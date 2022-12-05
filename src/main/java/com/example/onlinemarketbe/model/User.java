@@ -1,4 +1,5 @@
 package com.example.onlinemarketbe.model;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Data
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class User {
@@ -25,12 +27,16 @@ public class User {
     @NotNull
     @Size(max = 255)
     private String password;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "info_id")
     Information information;
     @Column
     @NotNull
     private boolean active;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Identity identity;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable( name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

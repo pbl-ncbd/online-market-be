@@ -1,7 +1,7 @@
 package com.example.onlinemarketbe.services.impl;
 
 import com.example.onlinemarketbe.common.UserDetailsImpl;
-import com.example.onlinemarketbe.model.ERole;
+import com.example.onlinemarketbe.common.enums.ERole;
 import com.example.onlinemarketbe.model.Role;
 import com.example.onlinemarketbe.model.User;
 import com.example.onlinemarketbe.repositories.UserRepository;

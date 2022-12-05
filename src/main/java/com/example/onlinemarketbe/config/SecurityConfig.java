@@ -107,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers(AUTH_WHITELIST).permitAll()  // whitelist Swagger UI resources
                     // ... here goes your custom security configuration
-                    .antMatchers("/**").authenticated()  // require authentication for any endpoint that's not whitelisted
+//                    .antMatchers("/**").authenticated()  // require authentication for any endpoint that's not whitelisted
                     .antMatchers("/api/**").permitAll()
                     .antMatchers("/**").permitAll()
                     .antMatchers("/api/auth/**").permitAll()
