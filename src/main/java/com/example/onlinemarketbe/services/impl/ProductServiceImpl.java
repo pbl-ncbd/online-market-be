@@ -56,14 +56,14 @@ public class ProductServiceImpl implements ProductService {
         }
     }
     @Override
-    public  Product getProductById(int id)
+    public Product getProductById(int id)
     {
         return productRepository.findProductByIdAndStatus(id, true);
     }
 
  
   @Override
-    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest) throws IOException {
+    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest)  {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {

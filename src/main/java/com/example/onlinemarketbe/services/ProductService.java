@@ -1,6 +1,7 @@
 package com.example.onlinemarketbe.services;
 
 
+import com.example.onlinemarketbe.model.Product;
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
 import org.springframework.http.ResponseEntity;

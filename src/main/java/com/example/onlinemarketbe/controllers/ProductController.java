@@ -3,6 +3,7 @@ package com.example.onlinemarketbe.controllers;
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
 
+import com.example.onlinemarketbe.services.ProductService;
 import com.example.onlinemarketbe.services.impl.ImgServiceImpl;
 import com.example.onlinemarketbe.services.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
