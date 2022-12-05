@@ -2,7 +2,9 @@ package com.example.onlinemarketbe.repositories;
 
 import com.example.onlinemarketbe.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("SELECT T FROM Item T WHERE T.product.user.id = :idUser and T.id=:idItem")
       Item findItemBySale(int idUser,int idItem);
     Item findItemById(int id);
+
 
 
 }

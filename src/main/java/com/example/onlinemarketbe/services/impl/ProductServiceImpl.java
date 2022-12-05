@@ -1,9 +1,5 @@
 package com.example.onlinemarketbe.services.impl;
-
-import com.example.onlinemarketbe.model.Product;
-import com.example.onlinemarketbe.model.Type;
-import com.example.onlinemarketbe.model.UrlImg;
-import com.example.onlinemarketbe.model.User;
+import com.example.onlinemarketbe.model.*;
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.ListTypeRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
@@ -11,8 +7,9 @@ import com.example.onlinemarketbe.repositories.ProductRepository;
 import com.example.onlinemarketbe.repositories.TypeRepository;
 import com.example.onlinemarketbe.repositories.UrlImgRepository;
 import com.example.onlinemarketbe.repositories.UserRepository;
+import com.example.onlinemarketbe.services.CategoryService;
+import com.example.onlinemarketbe.services.ImgService;
 import com.example.onlinemarketbe.services.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,20 +20,29 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    ProductRepository productRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    CategoryServiceImpl categoryServiceimpl;
-    @Autowired
-    TypeRepository typeRepository;
-    @Autowired
-    UrlImgRepository urlImgRepository;
-    @Autowired
-    ImgServiceImpl imgServiceImpl;
+
+    private final ProductRepository productRepository;
+
+    private final UserRepository userRepository;
+
+    private final CategoryService categoryService;
+    private final TypeRepository typeRepository;
+
+    private final UrlImgRepository urlImgRepository;
+
+    private final ImgService imgService;
     @Value("${project.img_product}")
     private String img;
+
+    public ProductServiceImpl(ProductRepository productRepository, UserRepository userRepository, CategoryService categoryService, TypeRepository typeRepository, UrlImgRepository urlImgRepository, ImgService imgService) {
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
+        this.categoryService = categoryService;
+        this.typeRepository = typeRepository;
+        this.urlImgRepository = urlImgRepository;
+        this.imgService = imgService;
+    }
+
     @Override
     public ResponseEntity<?> getProductBySale(String username)
     {
@@ -55,8 +61,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findProductByIdAndStatus(id, true);
     }
 
-    @Override
-    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest)  {
+ 
+  @Override
+    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest) throws IOException {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -64,9 +71,8 @@ public class ProductServiceImpl implements ProductService {
         }
         else
         {
-
             Product product= new Product();
-            product.setCategory(categoryServiceimpl.getCategoryById(createProductRequest.getIdCategory()));
+            product.setCategory(categoryService.getCategoryById(createProductRequest.getIdCategory()));
             product.setName(createProductRequest.getName());
             product.setPrice(createProductRequest.getPrice());
             product.setQuantity(createProductRequest.getQuantity());
@@ -79,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
             {  for(MultipartFile i: files) {
                 UrlImg urlImg = new UrlImg();
                 urlImg.setProduct(product1);
-                urlImg.setUrl(imgServiceImpl.uploadImg(img,i));
+                urlImg.setUrl(imgService.uploadImg(img,i));
                 urlImgRepository.save(urlImg);
             }
             }
@@ -104,6 +110,7 @@ public class ProductServiceImpl implements ProductService {
 
         }
     }
+
     @Override
     public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest) {
         User user = userRepository.findUserByUsername(username);
@@ -117,7 +124,7 @@ public class ProductServiceImpl implements ProductService {
             Product product= productRepository.findProductByIdAndStatus(updateProductRequest.getIdProduct(),true);
             if(product==null) return ResponseEntity.ok("product empty");
             else {
-                product.setCategory(categoryServiceimpl.getCategoryById(updateProductRequest.getIdCategory()));
+                product.setCategory(categoryService.getCategoryById(updateProductRequest.getIdCategory()));
                 product.setName(updateProductRequest.getName());
                 product.setPrice(updateProductRequest.getPrice());
                 product.setQuantity(updateProductRequest.getQuantity());
@@ -128,7 +135,8 @@ public class ProductServiceImpl implements ProductService {
                 List<UrlImg> urlImgs= urlImgRepository.findAllByProductId(product.getId());
                 if(urlImgs!=null)
                 {
-                    imgServiceImpl.deleteImg(urlImgs);
+
+                    imgService.deleteImg(urlImgs);
                 }
                 List<Type> types= typeRepository.findAllByProductId(product.getId());
 
@@ -146,7 +154,7 @@ public class ProductServiceImpl implements ProductService {
                     for (MultipartFile i : files) {
                         UrlImg urlImg = new UrlImg();
                         urlImg.setProduct(product);
-                        urlImg.setUrl(imgServiceImpl.uploadImg(img, i));
+                        urlImg.setUrl(imgService.uploadImg(img, i));
                         urlImgRepository.save(urlImg);
                     }
                 }
@@ -170,6 +178,7 @@ public class ProductServiceImpl implements ProductService {
 
         }
     }
+
     @Override
     public ResponseEntity<?> deleteProduct(String username,int id)
     {
@@ -188,7 +197,33 @@ public class ProductServiceImpl implements ProductService {
                 return ResponseEntity.ok("delete success");
             }
 
+        }
+    }
+ @Override
+    public ResponseEntity<?> searchProduct(String keyword){
+        List<Product> productList = productRepository.searchProduct(keyword.toLowerCase());
+        if (productList == null){
+            return ResponseEntity.ok("Couldn't find any matching products");
+        }
+        else{
+            return ResponseEntity.ok(productList);
+        }
+    }
+ @Override
+    public ResponseEntity<?> searchProductByCategory(int id){
+        Category category = categoryService.getCategoryById(id);
+        if (category != null && category.isStatus()){
+            List<Product> productList = productRepository.findProductByCategoryId(id);
+            if (productList == null){
+                return ResponseEntity.ok("Couldn't find any matching products");
+            }
+            else{
+                return ResponseEntity.ok(productList);
             }
         }
+        else return ResponseEntity.ok("Category not found or deleted ");
+
+    }
 
 }
+
