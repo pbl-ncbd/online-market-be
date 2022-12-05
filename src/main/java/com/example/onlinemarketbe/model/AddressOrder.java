@@ -1,6 +1,7 @@
 package com.example.onlinemarketbe.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class AddressOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +27,8 @@ public class AddressOrder {
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    Order order;
 
 }

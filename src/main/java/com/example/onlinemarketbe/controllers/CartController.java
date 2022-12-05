@@ -1,21 +1,12 @@
 package com.example.onlinemarketbe.controllers;
 
 import com.example.onlinemarketbe.payload.request.CreateItemRequest;
-import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.UpdateItemRequest;
-import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
 import com.example.onlinemarketbe.payload.response.ItemResponse;
 import com.example.onlinemarketbe.payload.response.MessageResponse;
-import com.example.onlinemarketbe.repositories.ItemRepository;
-import com.example.onlinemarketbe.services.ImgService;
 import com.example.onlinemarketbe.services.ItemService;
-import com.example.onlinemarketbe.services.ProductService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;

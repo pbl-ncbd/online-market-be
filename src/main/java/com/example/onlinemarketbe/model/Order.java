@@ -5,7 +5,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +28,7 @@ public class Order {
     private int id;
     @Column
     @NotNull
-    private int totalPrice;
+    private double totalPrice;
     @ManyToOne
     @JoinColumn(name = "payment_id")
     Payment payment;

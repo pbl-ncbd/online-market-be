@@ -2,14 +2,11 @@ package com.example.onlinemarketbe.controllers;
 
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
-import com.example.onlinemarketbe.services.ImgService;
-import com.example.onlinemarketbe.services.ProductService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.example.onlinemarketbe.services.impl.ImgServiceImpl;
+import com.example.onlinemarketbe.services.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 
@@ -19,15 +16,37 @@ import java.security.Principal;
 
 public class ProductController {
     @Autowired
-    ProductService productService;
+    ProductServiceImpl productServiceImpl;
     @Autowired
-    ImgService imgService;
+    ImgServiceImpl imgServiceImpl;
+    @GetMapping("/get-product")
+    public ResponseEntity<?> getProduct(Principal principal)
+    {
+        try
+        {
+            return ResponseEntity.ok(productServiceImpl.getProductBySale(principal.getName()));
+        }catch (Exception e)
+        {
+            return ResponseEntity.ok(e);
+        }
+    }
+    @GetMapping("/get-product/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable int id)
+    {
+        try
+        {
+            return ResponseEntity.ok(productServiceImpl.getProductById(id));
+        }catch (Exception e)
+        {
+            return ResponseEntity.ok(e);
+        }
+    }
     @PostMapping("/create-product")
     public ResponseEntity<?> createProduct(Principal principal, @RequestBody CreateProductRequest createProductRequest)
     {
         try
         {
-            return ResponseEntity.ok(productService.createProduct(principal.getName(), createProductRequest));
+            return ResponseEntity.ok(productServiceImpl.createProduct(principal.getName(), createProductRequest));
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
@@ -38,7 +57,7 @@ public class ProductController {
     {
         try
         {
-            return ResponseEntity.ok(productService.updateProduct(principal.getName(), updateProductRequest));
+            return ResponseEntity.ok(productServiceImpl.updateProduct(principal.getName(), updateProductRequest));
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
@@ -49,7 +68,7 @@ public class ProductController {
     {
         try
         {
-            return ResponseEntity.ok(productService.deleteProduct(principal.getName(), id));
+            return ResponseEntity.ok(productServiceImpl.deleteProduct(principal.getName(), id));
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
