@@ -34,7 +34,6 @@ public class UserDetailsImpl implements UserDetails {
   }
 
 
-
   public static UserDetailsImpl build(int id, String username, String password, Set<Role> roles) {
     for (Role r: roles){
       System.out.println(r.getName().name());
@@ -44,9 +43,6 @@ public class UserDetailsImpl implements UserDetails {
     List<SimpleGrantedAuthority> authorities = roles.stream()
             .map(role -> new SimpleGrantedAuthority(role.getName().name()))
             .collect(Collectors.toList());
-
-
-
 
     return new UserDetailsImpl(id, username, password, authorities);
   }

@@ -12,18 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-
-<<<<<<< HEAD
-=======
-/**
- * Some javadoc. // OK
- *
- * @author Vuong
- * @since 20/11/2022
- * @deprecated Some javadoc.
- */
->>>>>>> a5e10c8 (base)
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
