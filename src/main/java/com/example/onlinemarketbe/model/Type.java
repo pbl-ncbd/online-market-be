@@ -17,7 +17,6 @@ public class Type {
     @JoinColumn(name = "product_id")
     Product product;
     @Column
-<<<<<<< HEAD
     @Size(max = 255)
     private String name;
     @Column
@@ -27,21 +26,7 @@ public class Type {
     @Size(max = 255)
     private String color;
     @Column
-=======
     @NotNull
-    @Size(max = 255)
-    private String name;
-    @Column
-    @NotNull
-    @Size(max = 255)
-    private String size;
-    @Column
-    @NotNull
-    @Size(max = 255)
-    private String color;
-    @Column
-    @NotNull
->>>>>>> a4af00c (create model)
     private  boolean status;
 
 }
