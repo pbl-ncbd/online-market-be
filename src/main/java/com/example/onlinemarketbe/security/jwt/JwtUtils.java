@@ -14,8 +14,6 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-
-
 @CrossOrigin()
 @Component
 public class JwtUtils {
@@ -32,8 +30,6 @@ public class JwtUtils {
 
   @Value("${onlinemarketbe.app.jwtCookieName}")
   private String jwtCookie;
-
-
   public String getJwtFromCookies(HttpServletRequest request) {
     Cookie cookie = WebUtils.getCookie(request, jwtCookie);
     if (cookie != null) {
@@ -42,7 +38,6 @@ public class JwtUtils {
       return null;
     }
   }
-
 
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsername(userPrincipal.getUsername());
@@ -53,8 +48,6 @@ public class JwtUtils {
                               .httpOnly(true).build();
     return cookie;
   }
-
-
   public ResponseCookie getCleanJwtCookie() {
 
     logger.info("Jwt utils clean");
@@ -66,8 +59,6 @@ public class JwtUtils {
     return cookie;
   }
 
-
-
   public String getUserNameFromJwtToken(String token) {
     return Jwts
             .parser()
@@ -76,8 +67,6 @@ public class JwtUtils {
             .getBody()
             .getSubject();
   }
-
-
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts
@@ -99,8 +88,6 @@ public class JwtUtils {
 
     return false;
   }
-
-
   public String generateTokenFromUsername(String username) {
     return Jwts.builder()
             .setSubject(username)

@@ -17,22 +17,18 @@ public class Identity {
     @Column
     @NotNull
     @Size(max = 255)
-    private String idCard;
-
+    private String idCart;
     @Column
     @NotNull
     @Size(max = 255)
     private String name;
-
     @Column
     @NotNull
     private String gender;
-
     @Column
     @NotNull
     @Size(max = 255)
     private String address;
-
     @Column
     @Size(max = 255)
     private String cardImage;

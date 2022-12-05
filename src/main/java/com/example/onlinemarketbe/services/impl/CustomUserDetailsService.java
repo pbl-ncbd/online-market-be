@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
@@ -52,8 +51,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         return user.getId();
     }
-
-
     public User findUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findUserByUsername(username);
         if (user == null) {

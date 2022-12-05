@@ -1,7 +1,4 @@
 package com.example.onlinemarketbe.controllers;
-
-
-
 import com.example.onlinemarketbe.common.UserDetailsImpl;
 import com.example.onlinemarketbe.model.User;
 import com.example.onlinemarketbe.payload.request.LoginRequest;
@@ -22,13 +19,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-
 import javax.validation.Valid;
 import java.security.Principal;
+
 import java.util.Objects;
-
-
 @CrossOrigin ()
 @RestController
 @RequestMapping ("/api/auth")
@@ -36,11 +30,9 @@ import java.util.Objects;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-
     private final CustomUserDetailsService customUserDetailsService;
 
     private final JwtUtils jwtUtils;
-
     AuthController(AuthenticationManager authenticationManager,
                    CustomUserDetailsService customUserDetailsService,
                    JwtUtils jwtUtils) {
@@ -54,6 +46,9 @@ public class AuthController {
     @PostMapping ("/register")
     public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signupRequest) {
 
+
+
+
             if (customUserDetailsService.registerUser(signupRequest.getUsername(),
                     signupRequest.getPassword()) == 1) {
                 LoginRequest loginRequest =
@@ -62,6 +57,8 @@ public class AuthController {
 
                 return authenticateUser(loginRequest);
             }
+
+
 
             return ResponseEntity.ok().body(new MessageResponse("register failed"));
         }
@@ -96,8 +93,6 @@ public class AuthController {
         }
 
     }
-
-
     @Operation(summary = "20/11/2022 by Vuong : get current user ")
     @GetMapping("/current")
     public ResponseEntity<?> currentUserName(Principal principal) {

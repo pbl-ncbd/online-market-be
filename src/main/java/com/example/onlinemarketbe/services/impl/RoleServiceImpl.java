@@ -6,7 +6,6 @@ import com.example.onlinemarketbe.repositories.RoleRepository;
 import com.example.onlinemarketbe.services.RoleService;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class RoleServiceImpl implements RoleService {
 

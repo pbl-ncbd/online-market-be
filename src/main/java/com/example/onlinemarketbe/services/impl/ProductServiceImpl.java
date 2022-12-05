@@ -1,5 +1,4 @@
 package com.example.onlinemarketbe.services.impl;
-
 import com.example.onlinemarketbe.model.*;
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.ListTypeRequest;
@@ -21,7 +20,6 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
 
     private final ProductRepository productRepository;
 
@@ -45,7 +43,27 @@ public class ProductServiceImpl implements ProductService {
         this.imgService = imgService;
     }
 
-    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest) throws IOException {
+    @Override
+    public ResponseEntity<?> getProductBySale(String username)
+    {
+        User user = userRepository.findUserByUsername(username);
+        if(user== null)
+        {
+            return ResponseEntity.ok("not logged in");
+        }
+        else {
+            return ResponseEntity.ok(productRepository.findAllByUserIdAndStatus(user.getId(),true));
+        }
+    }
+    @Override
+    public Product getProductById(int id)
+    {
+        return productRepository.findProductByIdAndStatus(id, true);
+    }
+
+ 
+  @Override
+    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest)  {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -53,7 +71,6 @@ public class ProductServiceImpl implements ProductService {
         }
         else
         {
-
             Product product= new Product();
             product.setCategory(categoryService.getCategoryById(createProductRequest.getIdCategory()));
             product.setName(createProductRequest.getName());
@@ -94,7 +111,8 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest) throws IOException {
+    @Override
+    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest) {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -117,6 +135,7 @@ public class ProductServiceImpl implements ProductService {
                 List<UrlImg> urlImgs= urlImgRepository.findAllByProductId(product.getId());
                 if(urlImgs!=null)
                 {
+
                     imgService.deleteImg(urlImgs);
                 }
                 List<Type> types= typeRepository.findAllByProductId(product.getId());
@@ -159,6 +178,8 @@ public class ProductServiceImpl implements ProductService {
 
         }
     }
+
+    @Override
     public ResponseEntity<?> deleteProduct(String username,int id)
     {
         User user = userRepository.findUserByUsername(username);
@@ -178,7 +199,7 @@ public class ProductServiceImpl implements ProductService {
 
         }
     }
-
+ @Override
     public ResponseEntity<?> searchProduct(String keyword){
         List<Product> productList = productRepository.searchProduct(keyword.toLowerCase());
         if (productList == null){
@@ -188,7 +209,7 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.ok(productList);
         }
     }
-
+ @Override
     public ResponseEntity<?> searchProductByCategory(int id){
         Category category = categoryService.getCategoryById(id);
         if (category != null && category.isStatus()){

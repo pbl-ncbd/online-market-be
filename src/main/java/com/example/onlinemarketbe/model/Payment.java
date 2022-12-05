@@ -17,8 +17,6 @@ public class Payment {
     @NotNull
     @Size(max = 255)
     private String name;
-    @Column
-    @NotNull
-    private boolean status;
+
 
 }

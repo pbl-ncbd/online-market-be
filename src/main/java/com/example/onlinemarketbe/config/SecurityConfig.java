@@ -1,12 +1,8 @@
 package com.example.onlinemarketbe.config;
-
-
 import com.example.onlinemarketbe.security.jwt.AuthEntryPointJwt;
 import com.example.onlinemarketbe.security.jwt.AuthTokenFilter;
-
 import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -30,12 +26,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         // jsr250Enabled = true,
         prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-
     private final AuthEntryPointJwt unauthorizedHandler;
-
     private final CustomUserDetailsService customUserDetailsService;
-
     private final AuthTokenFilter authTokenFilter;
 
     SecurityConfig(AuthEntryPointJwt unauthorizedHandler,
@@ -87,8 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html",
                 "/webjars/**");
     }
-
-
     private static final String[] AUTH_WHITELIST = {
         // -- Swagger UI v2
         "/v2/api-docs",
@@ -122,8 +112,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/**").permitAll()
                     .antMatchers("/api/auth/**").permitAll()
                     .anyRequest().authenticated();
-
-
 
         http.addFilterBefore(authTokenFilter,
                 UsernamePasswordAuthenticationFilter.class);

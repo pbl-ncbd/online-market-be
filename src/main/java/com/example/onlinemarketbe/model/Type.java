@@ -26,6 +26,7 @@ public class Type {
     @Size(max = 255)
     private String color;
     @Column
+    @NotNull
     private  boolean status;
 
 }
