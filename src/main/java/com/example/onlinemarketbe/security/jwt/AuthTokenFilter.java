@@ -1,7 +1,11 @@
 package com.example.onlinemarketbe.security.jwt;
 
 
+<<<<<<< HEAD
 import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
+=======
+import com.example.onlinemarketbe.services.CustomUserDetailsService;
+>>>>>>> a5e10c8 (base)
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+<<<<<<< HEAD
 import org.springframework.stereotype.Component;
+=======
+>>>>>>> a5e10c8 (base)
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+<<<<<<< HEAD
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
 
@@ -33,6 +41,23 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+=======
+/**
+ * Some javadoc. // OK
+ *
+ * @author Vuong
+ * @since 20/11/2022
+ * @deprecated Some javadoc.
+ */
+@SuppressWarnings({"checkstyle:Indentation", "checkstyle:FileTabCharacter"})
+public class AuthTokenFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+>>>>>>> a5e10c8 (base)
 
     private static final Logger logger = LoggerFactory
                                           .getLogger(AuthTokenFilter.class);
@@ -47,6 +72,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         logger.info("Auth token filter: jwt = " + jwt);
         if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
           String username = jwtUtils.getUserNameFromJwtToken(jwt);
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5e10c8 (base)
           UserDetails userDetails = userDetailsService
                                     .loadUserByUsername(username);
 

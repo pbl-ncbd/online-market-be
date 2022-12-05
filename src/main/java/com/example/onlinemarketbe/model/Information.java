@@ -25,7 +25,6 @@ public class Information {
     private String phone;
     @Column
     @NotNull
-<<<<<<< HEAD
     private Date birthDate;
 
     @ManyToOne
@@ -35,12 +34,7 @@ public class Information {
     @Column
     @NotNull
     private String address;
-=======
-    private Date timeStart;
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    Address address;
->>>>>>> a4af00c (create model)
+
 
 
 }

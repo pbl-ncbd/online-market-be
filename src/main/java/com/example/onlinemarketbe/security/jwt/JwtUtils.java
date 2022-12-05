@@ -15,7 +15,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+<<<<<<< HEAD
 
+=======
+/**
+ * Some javadoc. // OK
+ *
+ * @author Vuong
+ * @since 20/11/2022
+ * @deprecated Some javadoc.
+ */
+@SuppressWarnings({"checkstyle:Indentation", "checkstyle:FileTabCharacter"})
+>>>>>>> a5e10c8 (base)
 @CrossOrigin()
 @Component
 public class JwtUtils {
@@ -33,7 +44,17 @@ public class JwtUtils {
   @Value("${onlinemarketbe.app.jwtCookieName}")
   private String jwtCookie;
 
+<<<<<<< HEAD
 
+=======
+  /**
+   * Some javadoc. // OK
+   *
+   * @author Vuong
+   * @since 20/11/2022
+   * @deprecated Some javadoc.
+   */
+>>>>>>> a5e10c8 (base)
   public String getJwtFromCookies(HttpServletRequest request) {
     Cookie cookie = WebUtils.getCookie(request, jwtCookie);
     if (cookie != null) {
@@ -43,7 +64,17 @@ public class JwtUtils {
     }
   }
 
+<<<<<<< HEAD
 
+=======
+  /**
+   * Some javadoc. // OK
+   *
+   * @author Vuong
+   * @since 20/11/2022
+   * @deprecated Some javadoc.
+   */
+>>>>>>> a5e10c8 (base)
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsername(userPrincipal.getUsername());
     ResponseCookie cookie = ResponseCookie
@@ -54,7 +85,17 @@ public class JwtUtils {
     return cookie;
   }
 
+<<<<<<< HEAD
 
+=======
+  /**
+   * Some javadoc. // OK
+   *
+   * @author Vuong
+   * @since 20/11/2022
+   * @deprecated Some javadoc.
+   */
+>>>>>>> a5e10c8 (base)
   public ResponseCookie getCleanJwtCookie() {
 
     logger.info("Jwt utils clean");
@@ -67,7 +108,17 @@ public class JwtUtils {
   }
 
 
+<<<<<<< HEAD
 
+=======
+  /**
+   * Some javadoc. // OK
+   *
+   * @author Vuong
+   * @since 20/11/2022
+   * @deprecated Some javadoc.
+   */
+>>>>>>> a5e10c8 (base)
   public String getUserNameFromJwtToken(String token) {
     return Jwts
             .parser()
@@ -77,7 +128,17 @@ public class JwtUtils {
             .getSubject();
   }
 
+<<<<<<< HEAD
 
+=======
+  /**
+   * Some javadoc. // OK
+   *
+   * @author Vuong
+   * @since 20/11/2022
+   * @deprecated Some javadoc.
+   */
+>>>>>>> a5e10c8 (base)
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts
@@ -100,7 +161,17 @@ public class JwtUtils {
     return false;
   }
 
+<<<<<<< HEAD
 
+=======
+  /**
+   * Some javadoc. // OK
+   *
+   * @author Vuong
+   * @since 20/11/2022
+   * @deprecated Some javadoc.
+   */
+>>>>>>> a5e10c8 (base)
   public String generateTokenFromUsername(String username) {
     return Jwts.builder()
             .setSubject(username)

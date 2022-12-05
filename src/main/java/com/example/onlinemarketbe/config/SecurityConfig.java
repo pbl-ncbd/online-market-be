@@ -4,7 +4,9 @@ package com.example.onlinemarketbe.config;
 import com.example.onlinemarketbe.security.jwt.AuthEntryPointJwt;
 import com.example.onlinemarketbe.security.jwt.AuthTokenFilter;
 
+
 import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
+
 import org.springframework.context.annotation.Bean;
 
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -30,6 +33,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         // jsr250Enabled = true,
         prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 
 
     private final AuthEntryPointJwt unauthorizedHandler;
@@ -59,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider authProvider =
                 new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(customUserDetailsService);
+
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -87,6 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html",
                 "/webjars/**");
     }
+
 
 
     private static final String[] AUTH_WHITELIST = {
@@ -125,7 +131,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
+
         http.addFilterBefore(authTokenFilter,
+
                 UsernamePasswordAuthenticationFilter.class);
     }
 }

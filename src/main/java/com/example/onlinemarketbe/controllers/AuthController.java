@@ -9,9 +9,11 @@ import com.example.onlinemarketbe.payload.request.SignupRequest;
 import com.example.onlinemarketbe.payload.response.MessageResponse;
 import com.example.onlinemarketbe.payload.response.UserInfoResponse;
 import com.example.onlinemarketbe.security.jwt.JwtUtils;
+
 import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+
 import java.util.Objects;
 
 
@@ -54,6 +57,7 @@ public class AuthController {
     @PostMapping ("/register")
     public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signupRequest) {
 
+
             if (customUserDetailsService.registerUser(signupRequest.getUsername(),
                     signupRequest.getPassword()) == 1) {
                 LoginRequest loginRequest =
@@ -63,12 +67,14 @@ public class AuthController {
                 return authenticateUser(loginRequest);
             }
 
+
             return ResponseEntity.ok().body(new MessageResponse("register failed"));
         }
 
 
 
     @Operation(summary = "20/11/2022 by Vuong : login ")
+
     @PostMapping ("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         try {
@@ -98,6 +104,7 @@ public class AuthController {
     }
 
 
+
     @Operation(summary = "20/11/2022 by Vuong : get current user ")
     @GetMapping("/current")
     public ResponseEntity<?> currentUserName(Principal principal) {
@@ -108,8 +115,10 @@ public class AuthController {
     }
 
 
+
     @PreAuthorize ("hasRole('ROLE_ADMIN')")
     @Operation(summary = "20/11/2022 by Vuong : logout ")
+
     @PostMapping ("/logout")
     public ResponseEntity<?> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();

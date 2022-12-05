@@ -5,19 +5,17 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-<<<<<<< HEAD
+
 import java.util.HashSet;
 import java.util.Set;
-=======
->>>>>>> a4af00c (create model)
+
 
 @Getter
 @Setter
 @Entity
-<<<<<<< HEAD
+
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
-=======
->>>>>>> a4af00c (create model)
+
 public class User {
 
     @Id
@@ -34,8 +32,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "info_id")
     Information information;
-<<<<<<< HEAD
-
     @Column
     @NotNull
     private boolean active;
@@ -44,9 +40,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-=======
-    @Column
-    @NotNull
-    private boolean status;
->>>>>>> a4af00c (create model)
+
+
 }
