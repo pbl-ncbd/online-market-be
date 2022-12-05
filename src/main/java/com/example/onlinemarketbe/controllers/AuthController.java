@@ -14,6 +14,7 @@ import com.example.onlinemarketbe.services.impl.CustomUserDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -32,6 +33,9 @@ import java.security.Principal;
 import java.util.Objects;
 
 
+import java.util.Objects;
+
+
 @CrossOrigin ()
 @RestController
 @RequestMapping ("/api/auth")
@@ -39,6 +43,7 @@ import java.util.Objects;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+
 
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -58,6 +63,8 @@ public class AuthController {
     public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signupRequest) {
 
 
+
+
             if (customUserDetailsService.registerUser(signupRequest.getUsername(),
                     signupRequest.getPassword()) == 1) {
                 LoginRequest loginRequest =
@@ -66,6 +73,7 @@ public class AuthController {
 
                 return authenticateUser(loginRequest);
             }
+
 
 
             return ResponseEntity.ok().body(new MessageResponse("register failed"));
@@ -113,7 +121,6 @@ public class AuthController {
                         .requireNonNullElseGet(principal,
                                 () -> new MessageResponse("Don't exist user now")));
     }
-
 
 
     @PreAuthorize ("hasRole('ROLE_ADMIN')")

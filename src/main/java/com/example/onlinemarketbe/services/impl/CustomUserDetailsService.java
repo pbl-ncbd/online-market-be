@@ -4,10 +4,12 @@ import com.example.onlinemarketbe.common.UserDetailsImpl;
 import com.example.onlinemarketbe.model.ERole;
 import com.example.onlinemarketbe.model.Role;
 import com.example.onlinemarketbe.model.User;
+
 import com.example.onlinemarketbe.repositories.UserRepository;
 import com.example.onlinemarketbe.services.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -54,6 +57,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
 
+
     public User findUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findUserByUsername(username);
         if (user == null) {
@@ -89,5 +93,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             return 0;
         }
     }
+
 
 }

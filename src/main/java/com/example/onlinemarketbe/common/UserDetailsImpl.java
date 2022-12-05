@@ -46,6 +46,8 @@ public class UserDetailsImpl implements UserDetails {
             .collect(Collectors.toList());
 
 
+
+
     return new UserDetailsImpl(id, username, password, authorities);
   }
 

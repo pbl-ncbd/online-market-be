@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +18,9 @@ import java.util.Set;
 @Setter
 @Entity
 
+
 @Table(name = "orders")
+
 
 public class Order {
     @Id
@@ -24,7 +28,7 @@ public class Order {
     private int id;
     @Column
     @NotNull
-    private double totalPrice;
+    private int totalPrice;
     @ManyToOne
     @JoinColumn(name = "payment_id")
     Payment payment;
@@ -37,7 +41,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "status_id")
     Status status;
-
     @OneToMany(fetch = FetchType.EAGER)
 //    @JoinTable( name = "order_item",
 //            joinColumns = @JoinColumn(name = "order_id"),

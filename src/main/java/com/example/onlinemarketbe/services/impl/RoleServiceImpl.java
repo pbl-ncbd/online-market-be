@@ -4,6 +4,7 @@ import com.example.onlinemarketbe.model.ERole;
 import com.example.onlinemarketbe.model.Role;
 import com.example.onlinemarketbe.repositories.RoleRepository;
 import com.example.onlinemarketbe.services.RoleService;
+
 import org.springframework.stereotype.Service;
 
 
@@ -14,6 +15,7 @@ public class RoleServiceImpl implements RoleService {
     RoleServiceImpl(RoleRepository roleRepository){
         this.roleRepository = roleRepository;
     }
+
     public Role findRoleByName(ERole name){
         return roleRepository.findRoleByName(name);
     }

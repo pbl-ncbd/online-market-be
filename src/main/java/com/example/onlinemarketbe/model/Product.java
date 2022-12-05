@@ -13,8 +13,8 @@ import javax.validation.constraints.Size;
 @Setter
 @Entity
 @Table(name = "product")
-@NoArgsConstructor
 
+@NoArgsConstructor
 
 public class Product {
     @Id
