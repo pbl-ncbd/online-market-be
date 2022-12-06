@@ -11,10 +11,12 @@ import com.example.onlinemarketbe.repositories.ItemRepository;
 import com.example.onlinemarketbe.services.ImgService;
 import com.example.onlinemarketbe.services.ItemService;
 import com.example.onlinemarketbe.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +27,7 @@ import java.util.List;
 @CrossOrigin()
 @RestController
 @RequestMapping("/api/cart")
-
+@PreAuthorize("hasRole('ROLE_BUYER')")
 public class CartController {
 
     private final ItemService itemService;

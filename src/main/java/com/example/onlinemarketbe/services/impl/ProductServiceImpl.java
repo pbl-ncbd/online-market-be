@@ -3,6 +3,7 @@ import com.example.onlinemarketbe.model.*;
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.ListTypeRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
+import com.example.onlinemarketbe.payload.response.ProductResponse;
 import com.example.onlinemarketbe.repositories.ProductRepository;
 import com.example.onlinemarketbe.repositories.TypeRepository;
 import com.example.onlinemarketbe.repositories.UrlImgRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -109,6 +111,17 @@ public class ProductServiceImpl implements ProductService {
 
 
         }
+    }
+
+    @Override
+    public ResponseEntity<?> getAllProduct() {
+//        List<ProductResponse> list = new ArrayList<>();
+//        for(Product product: productRepository.findAll()) {
+//            list.add(new ProductResponse(product));
+//        }
+//        return ResponseEntity.ok(list);
+
+        return ResponseEntity.ok(productRepository.findAll());
     }
 
     @Override
