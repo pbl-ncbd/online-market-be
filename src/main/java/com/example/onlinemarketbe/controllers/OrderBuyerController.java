@@ -3,6 +3,7 @@ package com.example.onlinemarketbe.controllers;
 import com.example.onlinemarketbe.payload.request.CreateOrderRequest;
 import com.example.onlinemarketbe.services.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -10,6 +11,7 @@ import java.security.Principal;
 @CrossOrigin()
 @RestController
 @RequestMapping("/api/order")
+@PreAuthorize("hasRole('ROLE_BUYER')")
 public class OrderBuyerController {
 
   private final OrderService orderService;

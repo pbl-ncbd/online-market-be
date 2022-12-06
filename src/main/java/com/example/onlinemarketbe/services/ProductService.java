@@ -16,5 +16,7 @@ public interface ProductService {
     ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest);
     ResponseEntity<?> deleteProduct(String username,int id);
     ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest);
+
+    ResponseEntity<?> getAllProduct();
     
 }

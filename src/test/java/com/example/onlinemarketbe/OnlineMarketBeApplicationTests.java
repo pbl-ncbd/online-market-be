@@ -1,5 +1,6 @@
 package com.example.onlinemarketbe;
 
+import com.example.onlinemarketbe.service.CustomUserServiceTests;
 import com.example.onlinemarketbe.service.ItemServiceTests;
 import org.junit.internal.TextListener;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,8 @@ class OnlineMarketBeApplicationTests {
         junit.addListener(new TextListener(System.out));
 
         Result result = junit.run(
-                ItemServiceTests.class
+                ItemServiceTests.class,
+                CustomUserServiceTests.class
 
         );
         resultReport(result);
