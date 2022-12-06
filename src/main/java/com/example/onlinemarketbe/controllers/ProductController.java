@@ -20,7 +20,7 @@ import java.security.Principal;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/product")
 
 public class ProductController {
     private final ProductService productService;
@@ -64,6 +64,17 @@ public class ProductController {
         try
         {
             return ResponseEntity.ok(productService.getAllProduct());
+        }catch (Exception e)
+        {
+            return ResponseEntity.ok(e);
+        }
+    }
+    @GetMapping("/get-all-category")
+    public ResponseEntity<?> getAllCategory()
+    {
+        try
+        {
+            return ResponseEntity.ok(productService.getAllCategory());
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
