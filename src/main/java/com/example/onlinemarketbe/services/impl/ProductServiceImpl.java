@@ -237,6 +237,11 @@ public class ProductServiceImpl implements ProductService {
         else return ResponseEntity.ok("Category not found or deleted ");
 
     }
+    @Override
+    public List<Category> getAllCategory()
+    {
+        return categoryService.getListCategory();
+    }
 
 }
 
