@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
                     Item item= itemRepository.findItemBySale(idSales,idItem);
                     if(item!=null) price.add(item.getTotalPrice());
 
+
                 }
 
                 double sum=0;

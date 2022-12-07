@@ -47,7 +47,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/get-product/{shopName}")
+    @GetMapping("/get-product-by-shop/{shopName}")
     public ResponseEntity<?> getProductByShopName(@PathVariable String shopName)
     {
         try

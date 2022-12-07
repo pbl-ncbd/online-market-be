@@ -4,6 +4,7 @@ import com.example.onlinemarketbe.payload.request.CreateProductRequest;
 import com.example.onlinemarketbe.payload.request.ListTypeRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
 import com.example.onlinemarketbe.payload.response.ProductResponse;
+import com.example.onlinemarketbe.payload.response.ProductTypeResponse;
 import com.example.onlinemarketbe.repositories.ProductRepository;
 import com.example.onlinemarketbe.repositories.TypeRepository;
 import com.example.onlinemarketbe.repositories.UrlImgRepository;
@@ -54,13 +55,27 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.ok("not logged in");
         }
         else {
-            return ResponseEntity.ok(productRepository.findAllByUserIdAndStatus(user.getId(),true));
+              List<ProductTypeResponse> list = new ArrayList<>();
+              List<Product> list1= productRepository.findAllByUserIdAndStatus(user.getId(),true);
+              for(Product i: list1)
+              {
+                  ProductTypeResponse productTypeResponse = new ProductTypeResponse();
+                  productTypeResponse.setProduct(i);
+                  productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+                  list.add(productTypeResponse);
+              }
+            return ResponseEntity.ok(list);
         }
     }
     @Override
-    public Product getProductById(int id)
+    public ProductTypeResponse getProductById(int id)
     {
-        return productRepository.findProductByIdAndStatus(id, true);
+        Product i= productRepository.findProductByIdAndStatus(id, true);
+        ProductTypeResponse productTypeResponse = new ProductTypeResponse();
+            productTypeResponse.setProduct(i);
+            productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+
+        return productTypeResponse;
     }
 
  
@@ -115,13 +130,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<?> getAllProduct() {
-//        List<ProductResponse> list = new ArrayList<>();
-//        for(Product product: productRepository.findAll()) {
-//            list.add(new ProductResponse(product));
-//        }
-//        return ResponseEntity.ok(list);
 
-        return ResponseEntity.ok(productRepository.findAll());
+        List<ProductTypeResponse> list = new ArrayList<>();
+        List<Product> list1= productRepository.findAllByStatus(true);
+        for(Product i: list1)
+        {
+            ProductTypeResponse productTypeResponse = new ProductTypeResponse();
+            productTypeResponse.setProduct(i);
+            productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+            list.add(productTypeResponse);
+        }
+        return ResponseEntity.ok(list);
     }
 
     @Override
@@ -214,24 +233,42 @@ public class ProductServiceImpl implements ProductService {
     }
  @Override
     public ResponseEntity<?> searchProduct(String keyword){
-        List<Product> productList = productRepository.searchProduct(keyword.toLowerCase());
-        if (productList == null){
+
+     List<ProductTypeResponse> list = new ArrayList<>();
+     List<Product> productList = productRepository.searchProduct(keyword.toLowerCase());
+     for(Product i: productList)
+     {
+         ProductTypeResponse productTypeResponse = new ProductTypeResponse();
+         productTypeResponse.setProduct(i);
+         productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+         list.add(productTypeResponse);
+     }
+
+        if (list == null){
             return ResponseEntity.ok("Couldn't find any matching products");
         }
         else{
-            return ResponseEntity.ok(productList);
+            return ResponseEntity.ok(list);
         }
     }
  @Override
     public ResponseEntity<?> searchProductByCategory(int id){
         Category category = categoryService.getCategoryById(id);
         if (category != null && category.isStatus()){
+            List<ProductTypeResponse> list = new ArrayList<>();
             List<Product> productList = productRepository.findProductByCategoryId(id);
-            if (productList == null){
+            for(Product i: productList)
+            {
+                ProductTypeResponse productTypeResponse = new ProductTypeResponse();
+                productTypeResponse.setProduct(i);
+                productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+                list.add(productTypeResponse);
+            }
+            if (list == null){
                 return ResponseEntity.ok("Couldn't find any matching products");
             }
             else{
-                return ResponseEntity.ok(productList);
+                return ResponseEntity.ok(list);
             }
         }
         else return ResponseEntity.ok("Category not found or deleted ");
