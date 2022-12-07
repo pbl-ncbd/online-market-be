@@ -56,28 +56,43 @@ public class SellerServiceImpl implements SellerService {
     @Override
     @Transactional
     public void createSeller(SellerRegisterDto sellerRegisterDto) {
-        User user = userRepository.findById(sellerRegisterDto.getUserId()).orElseThrow(() -> new NotFoundException(String.format("User %s not found", sellerRegisterDto.getUserId())));
-        user.getRoles().add(roleRepository.findRoleByName(ERole.ROLE_SELLER));
-        if(user.getIdentity() != null) {
-            log.info("User: {} already have identity",user.getUsername());
-            return;
+        User user = userRepository.findById(sellerRegisterDto.getUserId())
+                .orElseThrow(() -> new NotFoundException(String.format("User %s not found", sellerRegisterDto.getUserId())));
+        Identity newIdentity;
+        if(user.getIdentity() == null) {
+            user.getRoles().add(roleRepository.findRoleByName(ERole.ROLE_SELLER));
+            newIdentity = new Identity();
+            newIdentity.setName(sellerRegisterDto.getName());
+            newIdentity.setGender(sellerRegisterDto.getGender());
+            newIdentity.setAddress(sellerRegisterDto.getAddress());
+            newIdentity.setUser(user);
+            user.setIdentity(newIdentity);
+            newIdentity = identityRepository.save(newIdentity);
+        }
+        else {
+            newIdentity = identityRepository.findByUser_Id(sellerRegisterDto.getUserId())
+                    .orElseThrow(() -> new NotFoundException(String.format("Can't find identity of seller: %d", sellerRegisterDto.getUserId())));
+            newIdentity.setName(sellerRegisterDto.getName());
+            newIdentity.setGender(sellerRegisterDto.getGender());
+            newIdentity.setAddress(sellerRegisterDto.getAddress());
+            var idCardsList = newIdentity.getIdCards();
+            idCardsList.forEach(i -> {
+                var url = i.getUrl();
+                identityImageRepository.deleteById(i.getId());
+                FileUtils.deleteFile(ImageUrlHelper.getFilenameFromUrl(url));
+            });
+            newIdentity.getIdCards().clear();
         }
 
-        Identity newIdentity = new Identity();
-        newIdentity.setName(sellerRegisterDto.getName());
-        newIdentity.setGender(sellerRegisterDto.getGender());
-        newIdentity.setAddress(sellerRegisterDto.getAddress());
-        newIdentity.setUser(user);
-        user.setIdentity(newIdentity);
-        var newIdentitySaved = identityRepository.save(newIdentity);
+        Identity finalNewIdentity = newIdentity;
         Arrays.asList(sellerRegisterDto.getIdCards()).forEach(idCard -> {
             IdentityImage identityImage = new IdentityImage();
-            identityImage.setIdentity(newIdentitySaved);
+            identityImage.setIdentity(finalNewIdentity);
             identityImage.setUrl(FileUtils.uploadImage(idCard));
             identityImageRepository.save(identityImage);
-            newIdentitySaved.getIdCards().add(identityImage);
+            finalNewIdentity.getIdCards().add(identityImage);
         });
-        identityRepository.save(newIdentitySaved);
+        identityRepository.save(finalNewIdentity);
 
         userRepository.save(user);
     }
@@ -99,15 +114,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     @Transactional
-    public void updateSellerIdentity(int sellerId, SellerIdentityDto sellerIdentityDto) {
-
-    }
-
-    @Override
-    @Transactional
     public void deleteSeller(int sellerId) {
         var seller = userRepository.findById(sellerId).orElseThrow(() -> new NotFoundException(String.format("User has id: %d not found",sellerId)));
-        var identity = identityRepository.findByUser_Id(sellerId).orElseThrow(() -> new NotFoundException("Can't find seller identity"));
+        var identity = identityRepository.findByUser_Id(sellerId).orElseThrow(() -> new NotFoundException("Can't find identity of seller: "+sellerId));
         var imageList = seller.getIdentity().getIdCards().stream().map(IdentityImage::getUrl);
         seller.setIdentity(null);
         identityRepository.deleteById(identity.getId());

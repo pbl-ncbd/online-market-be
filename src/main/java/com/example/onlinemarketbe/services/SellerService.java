@@ -16,7 +16,6 @@ public interface SellerService {
 
     void reportSeller(int sellerId, ReportRequest reportRequest);
 
-    void updateSellerIdentity(int sellerId, SellerIdentityDto sellerIdentityDto);
 
     void deleteSeller(int sellerId);
 

@@ -49,9 +49,10 @@ public class SellerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{id}/updateIdentity")
-    public ResponseEntity<?> updateSellerIdentity(@PathVariable("id") int sellerId, @RequestBody @Valid SellerIdentityDto sellerIdentityDto) {
-        sellerService.updateSellerIdentity(sellerId, sellerIdentityDto);
+    @PutMapping(value = "/{id}/updateIdentity", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<?> updateSellerIdentity(@PathVariable("id") int sellerId,@ModelAttribute @Valid SignupSellerRequest signupSellerRequest) {
+        SellerRegisterDto sellerRegisterDto = modelMapper.map(signupSellerRequest, SellerRegisterDto.class);
+        sellerService.createSeller(sellerRegisterDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
