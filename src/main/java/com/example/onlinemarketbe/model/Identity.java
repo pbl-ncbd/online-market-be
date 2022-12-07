@@ -1,12 +1,13 @@
 package com.example.onlinemarketbe.model;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 public class Identity {
 
@@ -24,21 +25,20 @@ public class Identity {
     private String name;
     @Column
     @NotNull
+    @Size(max = 255)
     private String gender;
     @Column
     @NotNull
     @Size(max = 255)
     private String address;
-    @Column
-    @Size(max = 255)
-    private String cardImage;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
+    @OneToMany(mappedBy = "identity", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<IdentityImage> idCards = new ArrayList<>();
     @Column
-    private boolean confirmed;
-
+    private boolean confirm = false;
+    @Column
+    private boolean deleted = false;
 
 }

@@ -1,4 +1,4 @@
-package com.example.onlinemarketbe.model;
+package com.example.onlinemarketbe.common.enums;
 
 public enum ERole {
   ROLE_SELLER,

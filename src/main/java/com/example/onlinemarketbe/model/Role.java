@@ -1,11 +1,11 @@
 package com.example.onlinemarketbe.model;
 
+import com.example.onlinemarketbe.common.enums.ERole;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter

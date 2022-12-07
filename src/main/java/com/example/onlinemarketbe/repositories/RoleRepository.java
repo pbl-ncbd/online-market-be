@@ -1,6 +1,6 @@
 package com.example.onlinemarketbe.repositories;
 
-import com.example.onlinemarketbe.model.ERole;
+import com.example.onlinemarketbe.common.enums.ERole;
 import com.example.onlinemarketbe.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
