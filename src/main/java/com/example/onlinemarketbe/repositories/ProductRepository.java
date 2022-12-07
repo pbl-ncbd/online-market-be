@@ -18,6 +18,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query("SELECT p FROM Product p WHERE p.status <>false AND p.category.id = :id" )
     public List<Product> findProductByCategoryId(int id);
     public Product findProductByIdAndStatus(int id,boolean status);
+
     public List<Product> findAllByStatus(boolean status);
     public List<Product> findAllByUserIdAndStatus(int id, boolean status);
 

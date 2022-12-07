@@ -30,6 +30,9 @@ public class OrderServiceImpl implements OrderService {
     AddressOrderRepository addressOrderRepository;
     @Autowired
     SalesRepository salesRepository;
+    @Autowired
+    ProductRepository productRepository;
+
     @Override
     public ResponseEntity<?> createOrder(String username, CreateOrderRequest createOrderRequest)
     {
@@ -63,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
                     Item item= itemRepository.findItemBySale(idSales,idItem);
                     if(item!=null) price.add(item.getTotalPrice());
 
+
                 }
 
                 double sum=0;
@@ -85,8 +89,9 @@ public class OrderServiceImpl implements OrderService {
                     if (item != null) {
                         item.setOrder(order1);
                         itemRepository.save(item);
-
-
+                        Product product = item.getProduct();
+                                product.setQuantity(product.getQuantity()-item.getQuantity());
+                                productRepository.save(product);
 
                     }
 

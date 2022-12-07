@@ -1,5 +1,6 @@
 package com.example.onlinemarketbe.model;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,9 +14,9 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
-    Product product;
+    private Product product;
     @Column
     @Size(max = 255)
     private String name;
@@ -29,4 +30,7 @@ public class Type {
     @NotNull
     private  boolean status;
 
+    public Type() {
+
+    }
 }

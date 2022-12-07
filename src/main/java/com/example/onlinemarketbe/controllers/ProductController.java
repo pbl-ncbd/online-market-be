@@ -47,7 +47,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/get-product/{shopName}")
+    @GetMapping("/get-product-by-shop/{shopName}")
     public ResponseEntity<?> getProductByShopName(@PathVariable String shopName)
     {
         try
@@ -81,8 +81,6 @@ public class ProductController {
         }
     }
     @GetMapping("/get-product/{id}")
-    @Operation(summary = "Has role seller")
-    @PreAuthorize ("hasRole('ROLE_SELLER')")
     public ResponseEntity<?> getProductById(@PathVariable int id)
     {
         try
