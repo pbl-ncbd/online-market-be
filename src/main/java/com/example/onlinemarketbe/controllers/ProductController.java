@@ -81,8 +81,6 @@ public class ProductController {
         }
     }
     @GetMapping("/get-product/{id}")
-    @Operation(summary = "Has role seller")
-    @PreAuthorize ("hasRole('ROLE_SELLER')")
     public ResponseEntity<?> getProductById(@PathVariable int id)
     {
         try
