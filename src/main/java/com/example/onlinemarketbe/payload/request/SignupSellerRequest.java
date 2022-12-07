@@ -1,7 +1,6 @@
 package com.example.onlinemarketbe.payload.request;
 
 import com.example.onlinemarketbe.common.annotations.ValidGender;
-import com.example.onlinemarketbe.model.Address;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
