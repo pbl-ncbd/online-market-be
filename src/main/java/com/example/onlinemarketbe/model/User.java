@@ -34,7 +34,7 @@ public class User {
     @NotNull
     private boolean active;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Identity identity;
 
     @ManyToMany(fetch = FetchType.EAGER)

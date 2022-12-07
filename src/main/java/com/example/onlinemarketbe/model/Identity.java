@@ -37,8 +37,8 @@ public class Identity {
     @OneToMany(mappedBy = "identity", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<IdentityImage> idCards = new ArrayList<>();
     @Column
-    private boolean confirm = false;
+    private boolean confirm ;
     @Column
-    private boolean deleted = false;
+    private boolean deleted ;
 
 }
