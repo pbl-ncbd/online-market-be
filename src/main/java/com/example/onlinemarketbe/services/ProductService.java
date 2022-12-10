@@ -16,7 +16,7 @@ public interface ProductService {
     ResponseEntity<?> getProductBySale(String username);
     ResponseEntity<?> searchProduct(String keyword);
     ProductTypeResponse getProductById(int id);
-    ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest);
+    ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest,MultipartFile[] listImg);
     ResponseEntity<?> deleteProduct(String username,int id);
     ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest, MultipartFile[] listImg);
 

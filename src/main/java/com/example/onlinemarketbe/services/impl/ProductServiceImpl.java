@@ -143,7 +143,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest) {
+    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest,MultipartFile[] listImg) {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -180,7 +180,7 @@ public class ProductServiceImpl implements ProductService {
                     }
                 }
 
-                List<MultipartFile> files = updateProductRequest.getFileImg();
+                MultipartFile[] files = listImg;
                 if (files != null) {
                     for (MultipartFile i : files) {
                         UrlImg urlImg = new UrlImg();

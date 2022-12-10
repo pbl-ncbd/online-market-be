@@ -106,14 +106,14 @@ public class ProductController {
             return ResponseEntity.ok(e);
         }
     }
-    @PostMapping("/update-product")
+    @PostMapping(value="/update-product",consumes = { MediaType.MULTIPART_FORM_DATA_VALUE ,MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Has role seller")
     @PreAuthorize ("hasRole('ROLE_SELLER')")
-    public ResponseEntity<?> updateProduct(Principal principal, @RequestBody UpdateProductRequest updateProductRequest)
+    public ResponseEntity<?> updateProduct(Principal principal, @RequestBody UpdateProductRequest updateProductRequest,@ModelAttribute MultipartFile[] listImg)
     {
         try
         {
-            return productService.updateProduct(principal.getName(), updateProductRequest);
+            return productService.updateProduct(principal.getName(), updateProductRequest,listImg);
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
