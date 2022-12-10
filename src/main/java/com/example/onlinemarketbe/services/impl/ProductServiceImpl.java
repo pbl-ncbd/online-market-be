@@ -78,9 +78,9 @@ public class ProductServiceImpl implements ProductService {
         return productTypeResponse;
     }
 
- 
-  @Override
-    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest)  {
+
+    @Override
+    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest, MultipartFile[] listImg)  {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -97,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
             product.setDescription(createProductRequest.getDescription());
             product.setStatus(true);
             Product product1=productRepository.save(product);
-            List<MultipartFile> files= createProductRequest.getFileImg();
+            MultipartFile[] files= listImg;
             if(files!=null)
             {  for(MultipartFile i: files) {
                 UrlImg urlImg = new UrlImg();
@@ -106,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
                 urlImgRepository.save(urlImg);
             }
             }
-            List<ListTypeRequest> listTypeRequests= createProductRequest.getList();
+            ListTypeRequest[] listTypeRequests= createProductRequest.getList();
             if(listTypeRequests!=null)
             {
                 for(ListTypeRequest i:listTypeRequests)
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest) {
+    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest,MultipartFile[] listImg) {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -181,7 +181,7 @@ public class ProductServiceImpl implements ProductService {
                     }
                 }
 
-                List<MultipartFile> files = updateProductRequest.getFileImg();
+                MultipartFile[] files = listImg;
                 if (files != null) {
                     for (MultipartFile i : files) {
                         UrlImg urlImg = new UrlImg();

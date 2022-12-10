@@ -54,7 +54,7 @@ public class ItemServiceTests {
     @Transactional
     public void findAllItemByUser() {
         List<ItemResponse> items = itemService.findAllItemByUser(user.getUsername());
-        if (items.size() > 0)
+        if (items != null)
             for (ItemResponse itemResponse : items) {
                 assertEquals(itemResponse.getUserId(), user.getId());
             }
@@ -123,7 +123,7 @@ public class ItemServiceTests {
         }
         // get list item
         List<ItemResponse> items = itemService.findAllItemByUser(user.getUsername());
-        if (items.size() > 0)
+        if (items != null)
             for (ItemResponse itemResponse2 : items) {
                 assertEquals(itemResponse2.getUserId(), user.getId());
             }

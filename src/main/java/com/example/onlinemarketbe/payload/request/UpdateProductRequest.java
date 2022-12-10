@@ -17,6 +17,5 @@ public class UpdateProductRequest {
     private double price;
     private String description;
     private int quantity;
-    private List<MultipartFile> fileImg;
     private List<ListTypeRequest> list;
 }
