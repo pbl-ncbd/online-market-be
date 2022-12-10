@@ -19,7 +19,6 @@ public class CreateProductRequest {
     private double price;
     private String description;
     private int quantity;
-    private List<MultipartFile> fileImg;
-    private List<ListTypeRequest> list;
+    private ListTypeRequest[] list;
 
 }

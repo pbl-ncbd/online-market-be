@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.onlinemarketbe.services.ImgService;
 import io.swagger.v3.oas.annotations.Operation;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -93,27 +95,27 @@ public class ProductController {
     }
 
 
-    @PostMapping("/create-product")
+    @PostMapping(value ="/create-product" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE ,MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Has role seller")
     @PreAuthorize ("hasRole('ROLE_SELLER')")
-    public ResponseEntity<?> createProduct(Principal principal, @RequestBody CreateProductRequest createProductRequest)
+    public ResponseEntity<?> createProduct(Principal principal, @ModelAttribute CreateProductRequest createProductRequest,@ModelAttribute MultipartFile[] listImg)
     {
         try
         {
-            return ResponseEntity.ok(productService.createProduct(principal.getName(), createProductRequest));
+            return ResponseEntity.ok(productService.createProduct(principal.getName(), createProductRequest, listImg));
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
         }
     }
-    @PostMapping("/update-product")
+    @PostMapping(value="/update-product",consumes = { MediaType.MULTIPART_FORM_DATA_VALUE ,MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Has role seller")
     @PreAuthorize ("hasRole('ROLE_SELLER')")
-    public ResponseEntity<?> updateProduct(Principal principal, @RequestBody UpdateProductRequest updateProductRequest)
+    public ResponseEntity<?> updateProduct(Principal principal, @RequestBody UpdateProductRequest updateProductRequest,@ModelAttribute MultipartFile[] listImg)
     {
         try
         {
-            return productService.updateProduct(principal.getName(), updateProductRequest);
+            return productService.updateProduct(principal.getName(), updateProductRequest,listImg);
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
