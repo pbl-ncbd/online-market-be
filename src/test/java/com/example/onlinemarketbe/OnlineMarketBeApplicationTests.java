@@ -8,6 +8,8 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.Assert.assertEquals;
+
 @SpringBootTest(classes = OnlineMarketBeApplication.class)
 class OnlineMarketBeApplicationTests {
 
@@ -22,6 +24,7 @@ class OnlineMarketBeApplicationTests {
 
         );
         resultReport(result);
+        assertEquals(0, result.getFailureCount());
     }
     public static void resultReport(Result result) {
         System.out.println("Finished. Result: Failures: " +
