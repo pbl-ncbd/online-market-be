@@ -17,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @Transactional
 @SpringBootTest(classes = OnlineMarketBeApplication.class)
@@ -71,34 +70,34 @@ public class ItemServiceTests {
             }
 
     }
-    @Test
-    @Transactional
-    public void deleteItemById() {
-        int itemId = 2;
-        ItemResponse item = itemService.findItemById(itemId, user.getUsername());
-        if(item != null){
-            boolean success = itemService.deleteItemById(itemId, user.getUsername());
-            assertTrue(success);
-        }
-        assertTrue(true);
-
-    }
-    @Test
-    @Transactional
-    public void updateItem() {
-        UpdateItemRequest updateItemRequest = new UpdateItemRequest();
-        updateItemRequest.setItemId(2);
-        updateItemRequest.setQuantity(2);
-        updateItemRequest.setTypeId(1);
-
-        ItemResponse itemResponse = itemService.updateItem(updateItemRequest, user.getUsername());
-        if(itemResponse != null){
-            assertEquals(user.getId(), itemResponse.getUserId());
-            assertEquals(updateItemRequest.getItemId(), itemResponse.getId());
-            assertEquals(itemResponse.getProduct().getPrice() * 2, itemResponse.getTotalPrice(), 0.1);
-        }
-
-    }
+//    @Test
+//    @Transactional
+//    public void deleteItemById() {
+//        int itemId = 2;
+//        ItemResponse item = itemService.findItemById(itemId, user.getUsername());
+//        if(item != null){
+//            boolean success = itemService.deleteItemById(itemId, user.getUsername());
+//            assertTrue(success);
+//        }
+//        assertTrue(true);
+//
+//    }
+//    @Test
+//    @Transactional
+//    public void updateItem() {
+//        UpdateItemRequest updateItemRequest = new UpdateItemRequest();
+//        updateItemRequest.setItemId(2);
+//        updateItemRequest.setQuantity(2);
+//        updateItemRequest.setTypeId(1);
+//
+//        ItemResponse itemResponse = itemService.updateItem(updateItemRequest, user.getUsername());
+//        if(itemResponse != null){
+//            assertEquals(user.getId(), itemResponse.getUserId());
+//            assertEquals(updateItemRequest.getItemId(), itemResponse.getId());
+//            assertEquals(itemResponse.getProduct().getPrice() * 2, itemResponse.getTotalPrice(), 0.1);
+//        }
+//
+//    }
     @Test
     @Transactional
     public void addItemToCart() {
@@ -110,7 +109,55 @@ public class ItemServiceTests {
         ItemResponse itemResponse = itemService.addItemToCart(createItemRequest, user.getUsername());
         assertEquals(user.getId(), itemResponse.getUserId());
         assertEquals(itemResponse.getProduct().getPrice() * itemResponse.getQuantity(), itemResponse.getTotalPrice(), 0.4);
+        // update item
+        UpdateItemRequest updateItemRequest = new UpdateItemRequest();
+        updateItemRequest.setItemId(2);
+        updateItemRequest.setQuantity(2);
+        updateItemRequest.setTypeId(1);
+
+        ItemResponse itemResponse1 = itemService.updateItem(updateItemRequest, user.getUsername());
+        if(itemResponse1 != null){
+            assertEquals(user.getId(), itemResponse1.getUserId());
+            assertEquals(updateItemRequest.getItemId(), itemResponse1.getId());
+            assertEquals(itemResponse1.getProduct().getPrice() * 2, itemResponse1.getTotalPrice(), 0.1);
+        }
+        // get list item
+        List<ItemResponse> items = itemService.findAllItemByUser(user.getUsername());
+        if (items.size() > 0)
+            for (ItemResponse itemResponse2 : items) {
+                assertEquals(itemResponse2.getUserId(), user.getId());
+            }
+        // delete item
+        int itemId = itemResponse.getId();
+        ItemResponse item = itemService.findItemById(itemId, user.getUsername());
+        if(item != null){
+            boolean success = itemService.deleteItemById(itemId, user.getUsername());
+            assertTrue(success);
+        }
+        assertTrue(true);
+    }
+    @Test
+    @Transactional
+    public void addItemToCartFail() {
+        CreateItemRequest createItemRequest = new CreateItemRequest();
+        createItemRequest.setProductId(null);
+        createItemRequest.setTypeId(null);
+        createItemRequest.setQuantity(null);
+        ItemResponse itemResponse = itemService.addItemToCart(createItemRequest, user.getUsername());
+        assertNull(itemResponse);
+
+        createItemRequest.setProductId(1);
+        createItemRequest.setTypeId(15);
+        createItemRequest.setQuantity(4);
+        itemResponse = itemService.addItemToCart(createItemRequest, user.getUsername());
+        assertNull(itemResponse);
+
+        createItemRequest.setProductId(1);
+        createItemRequest.setTypeId(null);
+        createItemRequest.setQuantity(4);
+        itemResponse = itemService.addItemToCart(createItemRequest, user.getUsername());
+        assertNull(itemResponse);
 
     }
 
-}
+    }

@@ -135,16 +135,29 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemResponse addItemToCart(CreateItemRequest createItemRequest, String username) {
         try {
+            Integer typeId = null;
+            Type type = null;
             logger.info("add item " + createItemRequest.getProductId() + " by user: " + username);
             Product product = productRepository.findById(createItemRequest.getProductId()).get();
-            Type type = typeRepository.findById(createItemRequest.getTypeId()).get();
             User user = userRepository.findUserByUsername(username);
-            if (user.getId() == product.getUser().getId()) {
+            List<Type> typeList = typeRepository.findAllByProductId(createItemRequest.getProductId());
+            if ((user.getId() == product.getUser().getId())
+                || (createItemRequest.getQuantity() > product.getQuantity())
+                || (typeList.size() > 0 && createItemRequest.getTypeId() == null)
+                || typeList.size() == 0 && createItemRequest.getTypeId() != null) {
                 return null;
             }
+
+            if (typeList.size() > 0 && createItemRequest.getTypeId() != null) {
+                type = typeRepository.findById(createItemRequest.getTypeId()).get();
+                if (!typeList.contains(type)) return null;
+                typeId = createItemRequest.getTypeId();
+            }
+
+
             Item itemExist = itemRepository
                     .findItemByProductIdAndTypeIdAndUserIdAndOrderId(product.getId(),
-                            type.getId(),
+                            typeId,
                             user.getId(),
                             null);
             if (itemExist == null) {
