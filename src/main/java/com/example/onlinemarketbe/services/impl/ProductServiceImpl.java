@@ -1,9 +1,9 @@
 package com.example.onlinemarketbe.services.impl;
 import com.example.onlinemarketbe.model.*;
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
+import com.example.onlinemarketbe.payload.request.ListImg;
 import com.example.onlinemarketbe.payload.request.ListTypeRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
-import com.example.onlinemarketbe.payload.response.ProductResponse;
 import com.example.onlinemarketbe.payload.response.ProductTypeResponse;
 import com.example.onlinemarketbe.repositories.ProductRepository;
 import com.example.onlinemarketbe.repositories.TypeRepository;
@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
  
   @Override
-    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest)  {
+    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest, MultipartFile[] listImg)  {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -97,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
             product.setDescription(createProductRequest.getDescription());
             product.setStatus(true);
             Product product1=productRepository.save(product);
-            List<MultipartFile> files= createProductRequest.getFileImg();
+            MultipartFile[] files= listImg;
             if(files!=null)
             {  for(MultipartFile i: files) {
                 UrlImg urlImg = new UrlImg();
@@ -106,7 +105,7 @@ public class ProductServiceImpl implements ProductService {
                 urlImgRepository.save(urlImg);
             }
             }
-            List<ListTypeRequest> listTypeRequests= createProductRequest.getList();
+            ListTypeRequest[] listTypeRequests= createProductRequest.getList();
             if(listTypeRequests!=null)
             {
                 for(ListTypeRequest i:listTypeRequests)

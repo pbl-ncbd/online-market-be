@@ -1,5 +1,6 @@
 package com.example.onlinemarketbe.payload.request;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,13 +14,14 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Data
 public class CreateProductRequest {
     private int idCategory;
     private String name;
     private double price;
     private String description;
     private int quantity;
-    private List<MultipartFile> fileImg;
-    private List<ListTypeRequest> list;
+    private ListTypeRequest[] list;
+
 
 }
