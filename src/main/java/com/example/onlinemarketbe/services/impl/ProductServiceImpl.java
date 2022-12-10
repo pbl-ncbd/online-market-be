@@ -5,6 +5,8 @@ import com.example.onlinemarketbe.payload.request.ListTypeRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
 import com.example.onlinemarketbe.payload.response.ProductResponse;
 import com.example.onlinemarketbe.payload.response.ProductTypeResponse;
+import com.example.onlinemarketbe.payload.response.TypeResponse;
+import com.example.onlinemarketbe.payload.response.UrlImgResponse;
 import com.example.onlinemarketbe.repositories.ProductRepository;
 import com.example.onlinemarketbe.repositories.TypeRepository;
 import com.example.onlinemarketbe.repositories.UrlImgRepository;
@@ -60,8 +62,21 @@ public class ProductServiceImpl implements ProductService {
               for(Product i: list1)
               {
                   ProductTypeResponse productTypeResponse = new ProductTypeResponse();
-                  productTypeResponse.setProduct(i);
-                  productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+                  productTypeResponse.setProductResponse(new ProductResponse(i));
+                  List<Type> list2= typeRepository.findAllByProductId(i.getId());
+                  List<TypeResponse >list3= new ArrayList<>();
+                  for(Type type:list2)
+                  {
+                      list3.add(new TypeResponse(type));
+                  }
+                  productTypeResponse.setTypeList(list3);
+                  List<UrlImg> list4= urlImgRepository.findAllByProductId(i.getId());
+                  List<UrlImgResponse>list5= new ArrayList<>();
+                  for(UrlImg type:list4)
+                  {
+                      list5.add(new UrlImgResponse(type));
+                  }
+                  productTypeResponse.setUrlImgList(list5);
                   list.add(productTypeResponse);
               }
             return ResponseEntity.ok(list);
@@ -72,8 +87,21 @@ public class ProductServiceImpl implements ProductService {
     {
         Product i= productRepository.findProductByIdAndStatus(id, true);
         ProductTypeResponse productTypeResponse = new ProductTypeResponse();
-            productTypeResponse.setProduct(i);
-            productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+        productTypeResponse.setProductResponse(new ProductResponse(i));
+        List<Type> list2= typeRepository.findAllByProductId(i.getId());
+        List<TypeResponse >list3= new ArrayList<>();
+        for(Type type:list2)
+        {
+            list3.add(new TypeResponse(type));
+        }
+        productTypeResponse.setTypeList(list3);
+        List<UrlImg> list4= urlImgRepository.findAllByProductId(i.getId());
+        List<UrlImgResponse>list5= new ArrayList<>();
+        for(UrlImg type:list4)
+        {
+            list5.add(new UrlImgResponse(type));
+        }
+        productTypeResponse.setUrlImgList(list5);
 
         return productTypeResponse;
     }
@@ -136,8 +164,21 @@ public class ProductServiceImpl implements ProductService {
         for(Product i: list1)
         {
             ProductTypeResponse productTypeResponse = new ProductTypeResponse();
-            productTypeResponse.setProduct(i);
-            productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+            productTypeResponse.setProductResponse(new ProductResponse(i));
+            List<Type> list2= typeRepository.findAllByProductId(i.getId());
+            List<TypeResponse >list3= new ArrayList<>();
+            for(Type type:list2)
+            {
+                list3.add(new TypeResponse(type));
+            }
+            productTypeResponse.setTypeList(list3);
+            List<UrlImg> list4= urlImgRepository.findAllByProductId(i.getId());
+            List<UrlImgResponse>list5= new ArrayList<>();
+            for(UrlImg type:list4)
+            {
+                list5.add(new UrlImgResponse(type));
+            }
+            productTypeResponse.setUrlImgList(list5);
             list.add(productTypeResponse);
         }
         return ResponseEntity.ok(list);
@@ -239,8 +280,21 @@ public class ProductServiceImpl implements ProductService {
      for(Product i: productList)
      {
          ProductTypeResponse productTypeResponse = new ProductTypeResponse();
-         productTypeResponse.setProduct(i);
-         productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+         productTypeResponse.setProductResponse(new ProductResponse(i));
+         List<Type> list2= typeRepository.findAllByProductId(i.getId());
+         List<TypeResponse >list3= new ArrayList<>();
+         for(Type type:list2)
+         {
+             list3.add(new TypeResponse(type));
+         }
+         productTypeResponse.setTypeList(list3);
+         List<UrlImg> list4= urlImgRepository.findAllByProductId(i.getId());
+         List<UrlImgResponse>list5= new ArrayList<>();
+         for(UrlImg type:list4)
+         {
+             list5.add(new UrlImgResponse(type));
+         }
+         productTypeResponse.setUrlImgList(list5);
          list.add(productTypeResponse);
      }
 
@@ -260,8 +314,21 @@ public class ProductServiceImpl implements ProductService {
             for(Product i: productList)
             {
                 ProductTypeResponse productTypeResponse = new ProductTypeResponse();
-                productTypeResponse.setProduct(i);
-                productTypeResponse.setTypeList(typeRepository.findAllByProductId(i.getId()));
+                productTypeResponse.setProductResponse(new ProductResponse(i));
+                List<Type> list2= typeRepository.findAllByProductId(i.getId());
+                List<TypeResponse >list3= new ArrayList<>();
+                for(Type type:list2)
+                {
+                    list3.add(new TypeResponse(type));
+                }
+                productTypeResponse.setTypeList(list3);
+                List<UrlImg> list4= urlImgRepository.findAllByProductId(i.getId());
+                List<UrlImgResponse>list5= new ArrayList<>();
+                for(UrlImg type:list4)
+                {
+                    list5.add(new UrlImgResponse(type));
+                }
+                productTypeResponse.setUrlImgList(list5);
                 list.add(productTypeResponse);
             }
             if (list == null){
