@@ -25,9 +25,12 @@ public class TypeResponse {
 
 
     public TypeResponse(Type type) {
-        this.id = type.getId();
-        this.name = type.getName();
-        this.size = type.getSize();
-        this.color = type.getColor();
+        if(type != null) {
+            this.id = type.getId();
+            this.name = type.getName();
+            this.size = type.getSize();
+            this.color = type.getColor();
+        }
+
     }
 }
