@@ -144,7 +144,7 @@ public class ItemServiceImpl implements ItemService {
             if ((user.getId() == product.getUser().getId())
                 || (createItemRequest.getQuantity() > product.getQuantity())
                 || (typeList.size() > 0 && createItemRequest.getTypeId() == null)
-                || typeList.size() == 0 && createItemRequest.getTypeId() != null) {
+                || (typeList.size() == 0 && createItemRequest.getTypeId() != null)) {
                 return null;
             }
 
