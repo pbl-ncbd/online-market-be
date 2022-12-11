@@ -52,6 +52,32 @@ public class InformationServiceImpl implements InformationService {
         }
     }
 
+    public ResponseEntity<?> getProfile(String username){
+        User user = userRepository.findUserByUsername(username);
+        if(user==null)
+        {
+            return ResponseEntity.ok("Not logged in yet") ;
+        }
+        else
+        {
+            Information infor = user.getInformation();
+            return ResponseEntity.ok(infor);
+        }
+    }
+
+    public ResponseEntity<?> getAddress(String username){
+        User user = userRepository.findUserByUsername(username);
+        if(user==null)
+        {
+            return ResponseEntity.ok("Not logged in yet") ;
+        }
+        else
+        {
+            String address = user.getInformation().getAddress();
+            return ResponseEntity.ok(address);
+        }
+    }
+
 
 }
 
