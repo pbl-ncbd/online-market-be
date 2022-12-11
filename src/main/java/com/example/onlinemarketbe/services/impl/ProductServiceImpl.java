@@ -36,8 +36,7 @@ public class ProductServiceImpl implements ProductService {
     private final UrlImgRepository urlImgRepository;
 
     private final ImgService imgService;
-    @Value("${project.img_product}")
-    private String img;
+
 
     public ProductServiceImpl(ProductRepository productRepository, UserRepository userRepository, CategoryService categoryService, TypeRepository typeRepository, UrlImgRepository urlImgRepository, ImgService imgService) {
         this.productRepository = productRepository;
@@ -108,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest, MultipartFile[] listImg)  {
+    public ResponseEntity<?> createProduct(String username, CreateProductRequest createProductRequest, MultipartFile[] listImg,ListTypeRequest[] listTypeRequests)  {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -130,14 +129,14 @@ public class ProductServiceImpl implements ProductService {
             {  for(MultipartFile i: files) {
                 UrlImg urlImg = new UrlImg();
                 urlImg.setProduct(product1);
-                urlImg.setUrl(imgService.uploadImg(img,i));
+                urlImg.setUrl(imgService.uploadImg(i));
                 urlImgRepository.save(urlImg);
             }
             }
-            ListTypeRequest[] listTypeRequests= createProductRequest.getList();
-            if(listTypeRequests!=null)
+            ListTypeRequest[] listTypeRequests1= listTypeRequests;
+            if(listTypeRequests1!=null)
             {
-                for(ListTypeRequest i:listTypeRequests)
+                for(ListTypeRequest i:listTypeRequests1)
                 {
                     Type type= new Type();
                     type.setProduct(product1);
@@ -185,7 +184,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest,MultipartFile[] listImg) {
+    public ResponseEntity<?> updateProduct(String username, UpdateProductRequest updateProductRequest,MultipartFile[] listImg,ListTypeRequest[] listTypeRequests) {
         User user = userRepository.findUserByUsername(username);
         if(user== null)
         {
@@ -206,10 +205,9 @@ public class ProductServiceImpl implements ProductService {
                 productRepository.save(product);
                 //delete img old
                 List<UrlImg> urlImgs= urlImgRepository.findAllByProductId(product.getId());
-                if(urlImgs!=null)
+                for(UrlImg k: urlImgs)
                 {
-
-                    imgService.deleteImg(urlImgs);
+                    imgService.deleteImg(k.getUrl());
                 }
                 List<Type> types= typeRepository.findAllByProductId(product.getId());
 
@@ -227,11 +225,10 @@ public class ProductServiceImpl implements ProductService {
                     for (MultipartFile i : files) {
                         UrlImg urlImg = new UrlImg();
                         urlImg.setProduct(product);
-                        urlImg.setUrl(imgService.uploadImg(img, i));
+                        urlImg.setUrl(imgService.uploadImg( i));
                         urlImgRepository.save(urlImg);
                     }
                 }
-                List<ListTypeRequest> listTypeRequests = updateProductRequest.getList();
                 if (listTypeRequests != null) {
                     for (ListTypeRequest i : listTypeRequests) {
                         Type type = new Type();

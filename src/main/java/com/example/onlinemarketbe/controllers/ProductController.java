@@ -1,6 +1,7 @@
 package com.example.onlinemarketbe.controllers;
 
 import com.example.onlinemarketbe.payload.request.CreateProductRequest;
+import com.example.onlinemarketbe.payload.request.ListTypeRequest;
 import com.example.onlinemarketbe.payload.request.UpdateProductRequest;
 
 import com.example.onlinemarketbe.services.ProductService;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @CrossOrigin()
 @RestController
@@ -95,27 +97,40 @@ public class ProductController {
     }
 
 
-    @PostMapping(value ="/create-product" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE ,MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Has role seller")
-    @PreAuthorize ("hasRole('ROLE_SELLER')")
-    public ResponseEntity<?> createProduct(Principal principal, @ModelAttribute CreateProductRequest createProductRequest,@ModelAttribute MultipartFile[] listImg)
+//    @PostMapping(value ="/create-product" ,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE , MediaType.APPLICATION_JSON_VALUE})
+//    @Operation(summary = "Has role seller")
+////    @PreAuthorize ("hasRole('ROLE_SELLER')")
+//    public ResponseEntity<?> createProduct(Principal principal, @RequestPart CreateProductRequest createProductRequest, @RequestPart ListTypeRequest[] listTypeRequests, @ModelAttribute MultipartFile[] listImg)
+//    {
+//        try
+//        {
+//            return ResponseEntity.ok(productService.createProduct(principal.getName(), createProductRequest, listImg,listTypeRequests));
+//        }catch (Exception e)
+//        {
+//            return ResponseEntity.ok(e);
+//        }
+//    }
+@PostMapping(value ="/create-product" ,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE , MediaType.APPLICATION_JSON_VALUE})
+@Operation(summary = "Has role seller")
+   @PreAuthorize ("hasRole('ROLE_SELLER')")
+public ResponseEntity<?> createProduct(Principal principal, @RequestPart CreateProductRequest createProductRequest, @RequestPart ListTypeRequest[] listTypeRequests,@ModelAttribute MultipartFile[] listImg)
+{
+    try
     {
-        try
-        {
-            return ResponseEntity.ok(productService.createProduct(principal.getName(), createProductRequest, listImg));
-        }catch (Exception e)
-        {
-            return ResponseEntity.ok(e);
-        }
+        return ResponseEntity.ok(productService.createProduct(principal.getName(), createProductRequest, listImg,listTypeRequests));
+    }catch (Exception e)
+    {
+        return ResponseEntity.ok(e);
     }
+}
     @PostMapping(value="/update-product",consumes = { MediaType.MULTIPART_FORM_DATA_VALUE ,MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Has role seller")
     @PreAuthorize ("hasRole('ROLE_SELLER')")
-    public ResponseEntity<?> updateProduct(Principal principal, @RequestBody UpdateProductRequest updateProductRequest,@ModelAttribute MultipartFile[] listImg)
+    public ResponseEntity<?> updateProduct(Principal principal,@RequestPart UpdateProductRequest updateProductRequest,@RequestPart ListTypeRequest[] listTypeRequests, @ModelAttribute MultipartFile[] listImg)
     {
         try
         {
-            return productService.updateProduct(principal.getName(), updateProductRequest,listImg);
+            return productService.updateProduct(principal.getName(), updateProductRequest,listImg,listTypeRequests);
         }catch (Exception e)
         {
             return ResponseEntity.ok(e);
