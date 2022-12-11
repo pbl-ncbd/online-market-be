@@ -1,6 +1,7 @@
 package com.example.onlinemarketbe.services;
 
 import com.example.onlinemarketbe.payload.request.InformationRequest;
+import com.example.onlinemarketbe.payload.response.AddressResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface InformationService {

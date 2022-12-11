@@ -4,6 +4,7 @@ import com.example.onlinemarketbe.model.District;
 import com.example.onlinemarketbe.model.Information;
 import com.example.onlinemarketbe.model.User;
 import com.example.onlinemarketbe.payload.request.InformationRequest;
+import com.example.onlinemarketbe.payload.response.AddressResponse;
 import com.example.onlinemarketbe.repositories.DistrictRepository;
 import com.example.onlinemarketbe.repositories.InformationRepository;
 import com.example.onlinemarketbe.repositories.UserRepository;
@@ -69,12 +70,14 @@ public class InformationServiceImpl implements InformationService {
         User user = userRepository.findUserByUsername(username);
         if(user==null)
         {
-            return ResponseEntity.ok("Not logged in yet") ;
+            return ResponseEntity.ok("Not found user") ;
         }
         else
         {
+            District district = user.getInformation().getDistrict();
             String address = user.getInformation().getAddress();
-            return ResponseEntity.ok(address);
+            AddressResponse response = new AddressResponse(address, district);
+            return ResponseEntity.ok(response);
         }
     }
 

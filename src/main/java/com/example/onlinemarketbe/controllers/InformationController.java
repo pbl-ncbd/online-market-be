@@ -44,7 +44,7 @@ public class InformationController {
         }
     }
 
-    @PostMapping("/get-address-by-username/{userName}")
+    @PostMapping("/get-address-by-username/{username}")
     @Operation(summary = "11/12/2022 by Linh : This is get address by username")
     public ResponseEntity<?> getAddress(@PathVariable @Valid String username){
         try{
