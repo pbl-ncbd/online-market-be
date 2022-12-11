@@ -17,5 +17,5 @@ public class UpdateProductRequest {
     private double price;
     private String description;
     private int quantity;
-    private List<ListTypeRequest> list;
+
 }

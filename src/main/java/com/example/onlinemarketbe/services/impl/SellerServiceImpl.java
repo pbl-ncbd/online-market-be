@@ -10,6 +10,7 @@ import com.example.onlinemarketbe.model.Report;
 import com.example.onlinemarketbe.model.User;
 import com.example.onlinemarketbe.payload.request.ReportRequest;
 import com.example.onlinemarketbe.repositories.*;
+import com.example.onlinemarketbe.services.ImgService;
 import com.example.onlinemarketbe.services.SellerService;
 import com.example.onlinemarketbe.common.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +32,15 @@ public class SellerServiceImpl implements SellerService {
     private final ReportRepository reportRepository;
     private final IdentityImageRepository identityImageRepository;
     private final ModelMapper modelMapper;
+    private final ImgService imgService;
 
-    public SellerServiceImpl(UserRepository userRepository, IdentityRepository identityRepository, RoleRepository roleRepository, ReportRepository reportRepository, IdentityImageRepository identityImageRepository) {
+    public SellerServiceImpl(UserRepository userRepository, IdentityRepository identityRepository, RoleRepository roleRepository, ReportRepository reportRepository, IdentityImageRepository identityImageRepository, ImgService imgService) {
         this.userRepository = userRepository;
         this.identityRepository = identityRepository;
         this.roleRepository = roleRepository;
         this.reportRepository = reportRepository;
         this.identityImageRepository = identityImageRepository;
+        this.imgService = imgService;
         this.modelMapper = new ModelMapper();
         this.modelMapper.typeMap(IdentityImage.class, IdentityDto.IdentityImageDto.class).addMappings(mapper -> mapper.map(IdentityImage::getUrl, IdentityDto.IdentityImageDto::setUrl));
         this.modelMapper.typeMap(User.class, UserDto.class).addMappings(mapper -> {
@@ -60,7 +63,7 @@ public class SellerServiceImpl implements SellerService {
                 .orElseThrow(() -> new NotFoundException(String.format("User %s not found", sellerRegisterDto.getUserId())));
         Identity newIdentity;
         if(user.getIdentity() == null) {
-            user.getRoles().add(roleRepository.findRoleByName(ERole.ROLE_SELLER));
+
             newIdentity = new Identity();
             newIdentity.setName(sellerRegisterDto.getName());
             newIdentity.setGender(sellerRegisterDto.getGender());
@@ -79,7 +82,7 @@ public class SellerServiceImpl implements SellerService {
             idCardsList.forEach(i -> {
                 var url = i.getUrl();
                 identityImageRepository.deleteById(i.getId());
-                FileUtils.deleteFile(ImageUrlHelper.getFilenameFromUrl(url));
+                imgService.deleteImg(i.getUrl());
             });
             newIdentity.getIdCards().clear();
         }
@@ -88,7 +91,7 @@ public class SellerServiceImpl implements SellerService {
         Arrays.asList(sellerRegisterDto.getIdCards()).forEach(idCard -> {
             IdentityImage identityImage = new IdentityImage();
             identityImage.setIdentity(finalNewIdentity);
-            identityImage.setUrl(FileUtils.uploadImage(idCard));
+            identityImage.setUrl(imgService.uploadImg(idCard));
             identityImageRepository.save(identityImage);
             finalNewIdentity.getIdCards().add(identityImage);
         });
@@ -102,6 +105,7 @@ public class SellerServiceImpl implements SellerService {
     public void confirmSeller(int sellerId) {
         var seller = userRepository.findById(sellerId).orElseThrow(() -> new NotFoundException(String.format("User has id: %d not found",sellerId)));
         seller.getIdentity().setConfirm(true);
+        seller.getRoles().add(roleRepository.findRoleByName(ERole.ROLE_SELLER));
         userRepository.save(seller);
     }
 
@@ -119,9 +123,10 @@ public class SellerServiceImpl implements SellerService {
         var identity = identityRepository.findByUser_Id(sellerId).orElseThrow(() -> new NotFoundException("Can't find identity of seller: "+sellerId));
         var imageList = seller.getIdentity().getIdCards().stream().map(IdentityImage::getUrl);
         seller.setIdentity(null);
+        seller.setRoles(null);
         identityRepository.deleteById(identity.getId());
         userRepository.save(seller);
-        imageList.forEach(i -> FileUtils.deleteFile(ImageUrlHelper.getFilenameFromUrl(i)));
+        imageList.forEach(i -> imgService.deleteImg(i));
     }
 
     @Override
