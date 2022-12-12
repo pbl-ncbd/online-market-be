@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @CrossOrigin()
@@ -26,6 +27,28 @@ public class InformationController {
     public ResponseEntity<?> updateProfile(Principal principal , @RequestBody InformationRequest request){
         try{
             return ResponseEntity.ok(informationService.updateProfile(principal.getName(), request));
+        }
+        catch (Exception e){
+            return ResponseEntity.ok(e);
+        }
+    }
+
+    @GetMapping("/get-profile")
+    @Operation(summary = "11/12/2022 by Linh : This is get profile of user")
+    public ResponseEntity<?> getProfile(Principal principal ){
+        try{
+            return ResponseEntity.ok(informationService.getProfile(principal.getName()));
+        }
+        catch (Exception e){
+            return ResponseEntity.ok(e);
+        }
+    }
+
+    @PostMapping("/get-address-by-username/{username}")
+    @Operation(summary = "11/12/2022 by Linh : This is get address by username")
+    public ResponseEntity<?> getAddress(@PathVariable @Valid String username){
+        try{
+            return ResponseEntity.ok(informationService.getAddress(username));
         }
         catch (Exception e){
             return ResponseEntity.ok(e);
