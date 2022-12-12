@@ -64,6 +64,8 @@ public class ImgServiceImpl implements ImgService {
             Map result = cloudinary.uploader()
                     .destroy(id,
                             ObjectUtils.emptyMap());
+            UrlImg urlImg= urlImgRepository.findUrlImgByUrl(id);
+            urlImgRepository.delete(urlImg);
 
             return true;
         } catch (Exception ex) {

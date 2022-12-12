@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class ListTypeRequest implements Serializable {
+    private Integer id;
     private String name;
     private String size;
     private String color;

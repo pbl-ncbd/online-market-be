@@ -205,23 +205,13 @@ public class ProductServiceImpl implements ProductService {
                 productRepository.save(product);
                 //delete img old
                 List<UrlImg> urlImgs= urlImgRepository.findAllByProductId(product.getId());
-                for(UrlImg k: urlImgs)
-                {
-                    imgService.deleteImg(k.getUrl());
-                }
                 List<Type> types= typeRepository.findAllByProductId(product.getId());
-
-                if(types!=null)
-                {
-                    for(Type type:types)
-                    {
-
-                        typeRepository.delete(type);
-                    }
-                }
-
                 MultipartFile[] files = listImg;
                 if (files != null) {
+                    for(UrlImg k: urlImgs)
+                    {
+                    imgService.deleteImg(k.getUrl());
+                    }
                     for (MultipartFile i : files) {
                         UrlImg urlImg = new UrlImg();
                         urlImg.setProduct(product);
@@ -230,16 +220,30 @@ public class ProductServiceImpl implements ProductService {
                     }
                 }
                 if (listTypeRequests != null) {
+                    List<Type> listType123 = new ArrayList<>();
                     for (ListTypeRequest i : listTypeRequests) {
-                        Type type = new Type();
-                        type.setProduct(product);
-                        type.setStatus(true);
-                        type.setName(i.getName());
-                        type.setSize(i.getSize());
-                        type.setColor(i.getColor());
-                        typeRepository.save(type);
+                        if(i.getId()==null) {
+                            Type type = new Type();
+                            type.setProduct(product);
+                            type.setStatus(true);
+                            type.setName(i.getName());
+                            type.setSize(i.getSize());
+                            type.setColor(i.getColor());
+                            typeRepository.save(type);
+                        }
+                        else {
 
+                           Type type= typeRepository.findTypeById(i.getId());
+                            type.setProduct(product);
+                            type.setStatus(true);
+                            type.setName(i.getName());
+                            type.setSize(i.getSize());
+                            type.setColor(i.getColor());
+                            typeRepository.save(type);
+
+                        }
                     }
+
                 }
             }
             return ResponseEntity.ok("update success");
