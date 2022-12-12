@@ -20,6 +20,7 @@ public class ProductResponse {
     private String name;
 
     private double price;
+    private int quantity;
 
     private String description;
 
@@ -32,6 +33,7 @@ public class ProductResponse {
         this.description = product.getDescription();
         this.status = product.isStatus();
         this.category = product.getCategory();
+        this.quantity=product.getQuantity();
     }
 
 }
