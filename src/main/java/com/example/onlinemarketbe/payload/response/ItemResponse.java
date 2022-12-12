@@ -28,7 +28,13 @@ public class ItemResponse {
         this.totalPrice = item.getTotalPrice();
         this.quantity = item.getQuantity();
         this.product = new ProductResponse(item.getProduct());
-        this.type = new TypeResponse(item.getType());
+        if(item.getType()!= null) {
+            this.type = new TypeResponse(item.getType());
+        }
+        else
+        {
+            this.type=null;
+        }
     }
 
 }
