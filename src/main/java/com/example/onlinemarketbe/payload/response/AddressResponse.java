@@ -14,7 +14,19 @@ public class AddressResponse {
     private District district;
 
     public AddressResponse(String address, District district) {
-        this.address = address;
-        this.district = district;
+        if(address!=null) {
+            this.address = address;
+        }
+        else
+        {
+            this.address=null;
+        }
+        if(district!=null) {
+            this.district = district;
+        }
+        else
+        {
+            this.district=null;
+        }
     }
 }

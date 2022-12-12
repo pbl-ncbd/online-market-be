@@ -1,5 +1,6 @@
 package com.example.onlinemarketbe.model;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,21 +11,19 @@ import java.sql.Date;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Information {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    @NotNull
     @Size(max = 255)
     private String name;
     @Column
-    @NotNull
     @Size(max = 255)
     private String phone;
     @Column
-    @NotNull
     private Date birthDate;
 
     @ManyToOne
@@ -32,7 +31,6 @@ public class Information {
     private District district;
 
     @Column
-    @NotNull
     private String address;
 
 }

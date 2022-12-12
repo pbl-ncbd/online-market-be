@@ -15,7 +15,6 @@ public class Province {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    @NotNull
     @Size(max = 255)
     private String province_name;
 }
