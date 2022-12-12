@@ -14,7 +14,6 @@ public class District {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    @NotNull
     @Size(max = 255)
     private String district_name;
     @ManyToOne

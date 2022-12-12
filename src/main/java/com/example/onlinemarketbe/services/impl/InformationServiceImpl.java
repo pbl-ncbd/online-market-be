@@ -12,6 +12,8 @@ import com.example.onlinemarketbe.services.InformationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InformationServiceImpl implements InformationService {
 
@@ -49,6 +51,7 @@ public class InformationServiceImpl implements InformationService {
             infor.setAddress(informationRequest.getAddress());
             informationRepository.save(infor);
             user.setInformation(infor);
+            userRepository.save(user);
             return ResponseEntity.ok(infor);
         }
     }
@@ -62,6 +65,13 @@ public class InformationServiceImpl implements InformationService {
         else
         {
             Information infor = user.getInformation();
+            if(infor==null)
+            {
+                Information information= new Information();
+                informationRepository.save(information);
+                user.setInformation(information);
+                userRepository.save(user);
+            }
             return ResponseEntity.ok(infor);
         }
     }
@@ -74,12 +84,24 @@ public class InformationServiceImpl implements InformationService {
         }
         else
         {
+            Information information= user.getInformation();
+            if(information==null)
+            {
+                Information information1= new Information();
+                informationRepository.save(information1);
+                user.setInformation(information1);
+                userRepository.save(user);
+            }
             District district = user.getInformation().getDistrict();
             String address = user.getInformation().getAddress();
             AddressResponse response = new AddressResponse(address, district);
             return ResponseEntity.ok(response);
         }
     }
+public List<District> getAllDistrict()
+{
+    return districtRepository.findAll();
+}
 
 
 }

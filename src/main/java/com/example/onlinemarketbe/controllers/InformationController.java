@@ -1,6 +1,7 @@
 package com.example.onlinemarketbe.controllers;
 
 import com.example.onlinemarketbe.payload.request.InformationRequest;
+import com.example.onlinemarketbe.services.InformationService;
 import com.example.onlinemarketbe.services.impl.InformationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,7 +17,7 @@ import java.security.Principal;
 @Tag( name = "profile")
 public class InformationController {
 
-    private final InformationServiceImpl informationService;
+    private final InformationService informationService;
 
     public InformationController(InformationServiceImpl informationService) {
         this.informationService = informationService;
@@ -43,12 +44,22 @@ public class InformationController {
             return ResponseEntity.ok(e);
         }
     }
-
-    @PostMapping("/get-address-by-username/{username}")
-    @Operation(summary = "11/12/2022 by Linh : This is get address by username")
-    public ResponseEntity<?> getAddress(@PathVariable @Valid String username){
+    @GetMapping("/get-district")
+    @Operation(summary = "11/12/2022 by Linh : This is get district of user")
+    public ResponseEntity<?> getDistrict( ){
         try{
-            return ResponseEntity.ok(informationService.getAddress(username));
+            return ResponseEntity.ok(informationService.getAllDistrict());
+        }
+        catch (Exception e){
+            return ResponseEntity.ok(e);
+        }
+    }
+
+    @PostMapping("/get-address-order")
+    @Operation(summary = "11/12/2022 by Linh : This is get address by username")
+    public ResponseEntity<?> getAddress(Principal principal){
+        try{
+            return ResponseEntity.ok(informationService.getAddress(principal.getName()));
         }
         catch (Exception e){
             return ResponseEntity.ok(e);
