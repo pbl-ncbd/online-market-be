@@ -21,7 +21,7 @@ public class ProductResponse {
 
     private double price;
     private int quantity;
-
+private  String nameShop;
     private String description;
 
     private boolean status;
@@ -34,6 +34,7 @@ public class ProductResponse {
         this.status = product.isStatus();
         this.category = product.getCategory();
         this.quantity=product.getQuantity();
+        this.nameShop= product.getUser().getUsername();
     }
 
 }
