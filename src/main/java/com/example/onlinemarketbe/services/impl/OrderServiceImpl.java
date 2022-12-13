@@ -154,8 +154,9 @@ public class OrderServiceImpl implements OrderService {
 
                         if (item != null) {
                             InfoProduct infoProduct = new InfoProduct();
-
-                            infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                            if(item.getType()!=null) {
+                                infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                            }
                             infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                             infoProduct.setNumberProduct(item.getQuantity());
                             infoProduct.setNameProduct(item.getProduct().getName());
@@ -203,8 +204,9 @@ public class OrderServiceImpl implements OrderService {
 
                             InfoProduct infoProduct= new InfoProduct();
 
-                            infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
-                            infoProduct.setNameShop(item.getProduct().getUser().getUsername());
+                            if(item.getType()!=null) {
+                                infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                            } infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                             infoProduct.setNumberProduct(item.getQuantity());
                             infoProduct.setNameProduct(item.getProduct().getName());
                             infoProduct.setPrice(item.getProduct().getPrice());
@@ -252,8 +254,9 @@ public class OrderServiceImpl implements OrderService {
                     if (item != null) {
 
                         InfoProduct infoProduct= new InfoProduct();
-
-                        infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                        if(item.getType()!=null) {
+                            infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                        }
                         infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
@@ -302,9 +305,9 @@ public class OrderServiceImpl implements OrderService {
                     if (item != null) {
 
                         InfoProduct infoProduct= new InfoProduct();
-
-                        infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
-                        infoProduct.setNameShop(item.getProduct().getUser().getUsername());
+                        if(item.getType()!=null) {
+                            infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                        } infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
                         infoProduct.setPrice(item.getProduct().getPrice());
@@ -350,8 +353,9 @@ public class OrderServiceImpl implements OrderService {
                 for (Item item : list1) {
                     if (item != null) {
                         InfoProduct infoProduct= new InfoProduct();
-                        infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
-                        infoProduct.setNameShop(item.getProduct().getUser().getUsername());
+                        if(item.getType()!=null) {
+                            infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                        } infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
                         infoProduct.setPrice(item.getProduct().getPrice());
@@ -400,9 +404,9 @@ public class OrderServiceImpl implements OrderService {
                     if (item != null) {
 
                         InfoProduct infoProduct= new InfoProduct();
-
-                        infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
-                        infoProduct.setNameShop(item.getProduct().getUser().getUsername());
+                        if(item.getType()!=null) {
+                            infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                        }infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
                         infoProduct.setPrice(item.getProduct().getPrice());
@@ -451,9 +455,9 @@ public class OrderServiceImpl implements OrderService {
                     if (item != null) {
 
                         InfoProduct infoProduct= new InfoProduct();
-
-                        infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
-                        infoProduct.setNameShop(item.getProduct().getUser().getUsername());
+                        if(item.getType()!=null) {
+                            infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
+                        }infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
                         infoProduct.setPrice(item.getProduct().getPrice());
