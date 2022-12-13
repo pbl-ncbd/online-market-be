@@ -187,7 +187,7 @@ public class OrderServiceImpl implements OrderService {
             }
             else
             {  List<ViewOrder> listView= new ArrayList<>();
-                List<Order> list= orderRepository.findAllByBuyerIdAndStatus(user.getId(),EStatus.ordered);
+                List<Order> list= orderRepository.findAllByBuyerIdAndStatus(user.getUsername(),EStatus.ordered);
                 if(list!=null)
                 {  for(Order i: list) {
                     ViewOrder viewOrder = new ViewOrder();
@@ -196,7 +196,9 @@ public class OrderServiceImpl implements OrderService {
                     viewOrder.setPayment(i.getPayment().getName());
                     viewOrder.setTotalPrice(i.getTotalPrice());
                     AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderIdAndUserId(i.getId(),user.getId());
-                    viewOrder.setAddressOrder(addressOrder.getAddress()+","+addressOrder.getProvince_city());
+                    if(addressOrder!=null) {
+                        viewOrder.setAddressOrder(addressOrder.getAddress() + "," + addressOrder.getProvince_city());
+                    }
                     List<InfoProduct> infoProducts= new ArrayList<>();
                     List<Item> list1= itemRepository.findAllByUserIdAndOrderId(user.getId(),i.getId());
                     for (Item item : list1) {
@@ -220,7 +222,7 @@ public class OrderServiceImpl implements OrderService {
                     return  ResponseEntity.ok(listView);
                 }
 
-                return ResponseEntity.ok("List Item empty!");
+                return ResponseEntity.ok("List Order empty!");
 
 
             }
@@ -238,7 +240,7 @@ public class OrderServiceImpl implements OrderService {
         }
         else
         {  List<ViewOrder> listView= new ArrayList<>();
-            List<Order> list= orderRepository.findAllByBuyerIdAndStatus(user.getId(),EStatus.transport);
+            List<Order> list= orderRepository.findAllByBuyerIdAndStatus(user.getUsername(),EStatus.transport);
             if(list!=null)
             {  for(Order i: list) {
                 ViewOrder viewOrder = new ViewOrder();
@@ -247,7 +249,9 @@ public class OrderServiceImpl implements OrderService {
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderIdAndUserId(i.getId(),user.getId());
-                viewOrder.setAddressOrder(addressOrder.getAddress()+","+addressOrder.getProvince_city());
+                if(addressOrder!=null) {
+                    viewOrder.setAddressOrder(addressOrder.getAddress() + "," + addressOrder.getProvince_city());
+                }
                 List<InfoProduct> infoProducts= new ArrayList<>();
                 List<Item> list1= itemRepository.findAllByUserIdAndOrderId(user.getId(),i.getId());
                 for (Item item : list1) {
@@ -289,7 +293,7 @@ public class OrderServiceImpl implements OrderService {
         }
         else
         {  List<ViewOrder> listView= new ArrayList<>();
-            List<Order> list= orderRepository.findAllByBuyerIdAndStatus(user.getId(),EStatus.received);
+            List<Order> list= orderRepository.findAllByBuyerIdAndStatus(user.getUsername(),EStatus.received);
             if(list!=null)
             {  for(Order i: list) {
                 ViewOrder viewOrder = new ViewOrder();
@@ -298,7 +302,9 @@ public class OrderServiceImpl implements OrderService {
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderIdAndUserId(i.getId(),user.getId());
-                viewOrder.setAddressOrder(addressOrder.getAddress()+","+addressOrder.getProvince_city());
+                if(addressOrder!=null) {
+                    viewOrder.setAddressOrder(addressOrder.getAddress() + "," + addressOrder.getProvince_city());
+                }
                 List<InfoProduct> infoProducts= new ArrayList<>();
                 List<Item> list1= itemRepository.findAllByUserIdAndOrderId(user.getId(),i.getId());
                 for (Item item : list1) {
@@ -347,7 +353,9 @@ public class OrderServiceImpl implements OrderService {
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderId(i.getId());
-                viewOrder.setAddressOrder(addressOrder.getAddress()+","+addressOrder.getProvince_city());
+                if(addressOrder!=null) {
+                    viewOrder.setAddressOrder(addressOrder.getAddress() + "," + addressOrder.getProvince_city());
+                }
                 List<InfoProduct> infoProducts= new ArrayList<>();
                 List<Item> list1= itemRepository.findAllByOrderId(i.getId());
                 for (Item item : list1) {
@@ -397,7 +405,9 @@ public class OrderServiceImpl implements OrderService {
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderId(i.getId());
-                viewOrder.setAddressOrder(addressOrder.getAddress()+","+addressOrder.getProvince_city());
+                if(addressOrder!=null) {
+                    viewOrder.setAddressOrder(addressOrder.getAddress() + "," + addressOrder.getProvince_city());
+                }
                 List<InfoProduct> infoProducts= new ArrayList<>();
                 List<Item> list1= itemRepository.findAllByOrderId(i.getId());
                 for (Item item : list1) {
@@ -448,7 +458,9 @@ public class OrderServiceImpl implements OrderService {
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderId(i.getId());
-                viewOrder.setAddressOrder(addressOrder.getAddress()+","+addressOrder.getProvince_city());
+                if(addressOrder!=null) {
+                    viewOrder.setAddressOrder(addressOrder.getAddress() + "," + addressOrder.getProvince_city());
+                }
                 List<InfoProduct> infoProducts= new ArrayList<>();
                 List<Item> list1= itemRepository.findAllByOrderId(i.getId());
                 for (Item item : list1) {

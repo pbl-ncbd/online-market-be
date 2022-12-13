@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Integer> {
-    @Query("SELECT T FROM Order T WHERE T.buyer.id = :id and T.status.name = :eStatus ")
-    public List<Order> findAllByBuyerIdAndStatus(int id,EStatus eStatus);
+    @Query("SELECT T FROM Order T WHERE T.buyer.username = :username and T.status.name = :eStatus ")
+    public List<Order> findAllByBuyerIdAndStatus(String  username,EStatus eStatus);
     public  Order findOrderById(int id);
 
 
