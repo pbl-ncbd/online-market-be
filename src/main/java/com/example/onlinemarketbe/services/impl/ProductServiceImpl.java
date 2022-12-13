@@ -134,7 +134,7 @@ public class ProductServiceImpl implements ProductService {
             }
             }
             ListTypeRequest[] listTypeRequests1= listTypeRequests;
-            if(listTypeRequests1!=null)
+            if(listTypeRequests1.length>0)
             {
                 for(ListTypeRequest i:listTypeRequests1)
                 {
