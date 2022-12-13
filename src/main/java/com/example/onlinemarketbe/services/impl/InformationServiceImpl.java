@@ -98,10 +98,10 @@ public class InformationServiceImpl implements InformationService {
             return ResponseEntity.ok(response);
         }
     }
-public List<District> getAllDistrict()
-{
-    return districtRepository.findAll();
-}
+    public List<District> getAllDistrict()
+    {
+        return districtRepository.findAll();
+    }
 
 
 }
