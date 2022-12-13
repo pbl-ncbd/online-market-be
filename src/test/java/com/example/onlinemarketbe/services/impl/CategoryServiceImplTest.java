@@ -1,5 +1,7 @@
 package com.example.onlinemarketbe.services.impl;
 
+import com.example.onlinemarketbe.model.Category;
+import com.example.onlinemarketbe.repositories.CategoryRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,11 +23,6 @@ class CategoryServiceImplTest {
     @InjectMocks
     private CategoryServiceImpl categoryService;
 
-    @Test
-    @DisplayName("Should throw an exception when the id is invalid")
-    void getCategoryByIdWhenIdIsInvalidThenThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> categoryService.getCategoryById(0));
-    }
 
     @Test
     @DisplayName("Should return the category when the id is valid")
@@ -52,6 +48,8 @@ class CategoryServiceImplTest {
         categories.add(new Category());
         categories.add(new Category());
         when(categoryRepository.findAll()).thenReturn(categories);
-        assertEquals(2, categoryService.getListCategory().size());
+        List<Category> categorieList = categoryRepository.findAll();
+
+        assertEquals(2, categorieList.size());
     }
 }
