@@ -1,9 +1,6 @@
 package com.example.onlinemarketbe;
 
-import com.example.onlinemarketbe.service.CustomUserServiceTests;
-import com.example.onlinemarketbe.service.ItemServiceTests;
-import com.example.onlinemarketbe.service.OrderProductTest;
-import com.example.onlinemarketbe.service.ProductServiceTest;
+import com.example.onlinemarketbe.service.*;
 import org.junit.internal.TextListener;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.JUnitCore;
@@ -25,7 +22,6 @@ class OnlineMarketBeApplicationTests {
                 CustomUserServiceTests.class,
                 ProductServiceTest.class,
                 OrderProductTest.class
-
         );
         resultReport(result);
         assertEquals(0, result.getFailureCount());
