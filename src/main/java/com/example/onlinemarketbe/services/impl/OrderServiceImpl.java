@@ -84,8 +84,8 @@ public class OrderServiceImpl implements OrderService {
                 addressOrderRepository.save(addressOrder);
 
 
-                for (Integer i : list) {
-                    Item item = itemRepository.findItemBySale(idSales, i);
+                for (int idItem : list) {
+                    Item item = itemRepository.findItemBySale(idSales, idItem);
                     if (item != null) {
                         item.setOrder(order1);
                         itemRepository.save(item);
@@ -149,8 +149,8 @@ public class OrderServiceImpl implements OrderService {
                     viewOrder.setTotalPrice(sum);
                     viewOrder.setAddressOrder(createOrderRequest.getAddress() + "," + createOrderRequest.getProvince());
                     List<InfoProduct> infoProducts = new ArrayList<>();
-                    for (Integer i : list) {
-                        Item item= itemRepository.findItemBySale(idSales,i);
+                    for (int idItem : list) {
+                        Item item= itemRepository.findItemBySale(idSales,idItem);
 
                         if (item != null) {
                             InfoProduct infoProduct = new InfoProduct();
@@ -203,9 +203,7 @@ public class OrderServiceImpl implements OrderService {
                     List<Item> list1= itemRepository.findAllByUserIdAndOrderId(user.getId(),i.getId());
                     for (Item item : list1) {
                         if (item != null) {
-
                             InfoProduct infoProduct= new InfoProduct();
-
                             if(item.getType()!=null) {
                                 infoProduct.setTypeOrder("Color: " + item.getType().getColor() + "," + "Size: " + item.getType().getSize());
                             } infoProduct.setNameShop(item.getProduct().getUser().getUsername());

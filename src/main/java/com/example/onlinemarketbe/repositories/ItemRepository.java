@@ -19,8 +19,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     List<Item> findAllByUserIdAndOrderId(Integer userId, Integer orderId);
     List<Item> findAllByOrderId(int id);
-    @Query("SELECT T FROM Item T WHERE T.product.user.id = :idUser and T.id=:idItem")
-      Item findItemBySale(int idUser,int idItem);
+    @Query("SELECT T FROM Item T WHERE T.product.user.id = :idUser and T.id=:idItem and T.order.id is null")
+    Item findItemBySale(int idUser,int idItem);
     Item findItemById(int id);
 
 
