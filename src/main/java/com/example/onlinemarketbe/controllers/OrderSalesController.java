@@ -56,7 +56,7 @@ public class OrderSalesController {
         }
     }
    @PostMapping("/update-status")
-    public ResponseEntity<?> updateStatus(Principal principal, UpdateStatusOrder updateStatusOrder)
+    public ResponseEntity<?> updateStatus(Principal principal,@RequestBody UpdateStatusOrder updateStatusOrder)
    {
        try
        {
