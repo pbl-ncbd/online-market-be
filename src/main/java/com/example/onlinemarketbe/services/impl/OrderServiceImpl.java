@@ -298,7 +298,7 @@ public class OrderServiceImpl implements OrderService {
             {  for(Order i: list) {
                 ViewOrder viewOrder = new ViewOrder();
                 viewOrder.setDateOrder(i.getDateOrder());
-                viewOrder.setNamePersonOrder(username);
+                viewOrder.setNamePersonOrder(i.getBuyer().getUsername());
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderIdAndUserId(i.getId(),user.getId());
@@ -349,7 +349,7 @@ public class OrderServiceImpl implements OrderService {
                 ViewOrder1 viewOrder = new ViewOrder1();
                 viewOrder.setIdOrder(i.getId());
                 viewOrder.setDateOrder(i.getDateOrder());
-                viewOrder.setNamePersonOrder(username);
+                viewOrder.setNamePersonOrder(i.getBuyer().getUsername());
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderId(i.getId());
@@ -401,7 +401,7 @@ public class OrderServiceImpl implements OrderService {
                 ViewOrder1 viewOrder = new ViewOrder1();
                 viewOrder.setIdOrder(i.getId());
                 viewOrder.setDateOrder(i.getDateOrder());
-                viewOrder.setNamePersonOrder(username);
+                viewOrder.setNamePersonOrder(i.getBuyer().getUsername());
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderId(i.getId());
@@ -454,7 +454,7 @@ public class OrderServiceImpl implements OrderService {
                 ViewOrder1 viewOrder = new ViewOrder1();
                 viewOrder.setIdOrder(i.getId());
                 viewOrder.setDateOrder(i.getDateOrder());
-                viewOrder.setNamePersonOrder(username);
+                viewOrder.setNamePersonOrder(i.getBuyer().getUsername());
                 viewOrder.setPayment(i.getPayment().getName());
                 viewOrder.setTotalPrice(i.getTotalPrice());
                 AddressOrder addressOrder= addressOrderRepository.findAddressOrderByOrderId(i.getId());
