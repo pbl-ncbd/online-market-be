@@ -40,7 +40,7 @@ public class FileUtils {
     public static String uploadImage(final MultipartFile file) throws InvalidFileException {
         if(!FileUtils.checkImageType(file)) throw new InvalidFileException("Only accept image file");
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Path path = Paths.get(new File(FilePathConstrants.USER_IDENTITY_IMAGE_PATH).getAbsolutePath() + "\\" + fileName);
+        Path path = Paths.get(new File(FilePathConstrants.USER_IDENTITY_IMAGE_PATH).getAbsolutePath() + "/" + fileName);
         log.info(path.toString());
         try {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);

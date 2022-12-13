@@ -17,6 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/images")
+
 public class FileController {
     @Autowired
     ImgService imgService;

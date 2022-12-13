@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -140,6 +141,7 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public List<IdentityDto> getAllSellers() {
         var identity = identityRepository.findByDeletedFalse();
+        if(identity==null) identity = new ArrayList<>();
         return identity.stream().map(i -> modelMapper.map(i,IdentityDto.class)).collect(Collectors.toList());
     }
 
