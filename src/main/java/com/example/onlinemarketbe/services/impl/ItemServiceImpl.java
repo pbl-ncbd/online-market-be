@@ -1,12 +1,10 @@
 package com.example.onlinemarketbe.services.impl;
 
-import com.example.onlinemarketbe.model.Item;
-import com.example.onlinemarketbe.model.Product;
-import com.example.onlinemarketbe.model.Type;
-import com.example.onlinemarketbe.model.User;
+import com.example.onlinemarketbe.model.*;
 import com.example.onlinemarketbe.payload.request.CreateItemRequest;
 import com.example.onlinemarketbe.payload.request.UpdateItemRequest;
 import com.example.onlinemarketbe.payload.response.ItemResponse;
+import com.example.onlinemarketbe.payload.response.UrlImgResponse;
 import com.example.onlinemarketbe.repositories.*;
 import com.example.onlinemarketbe.services.ItemService;
 import org.slf4j.Logger;
@@ -25,15 +23,17 @@ public class ItemServiceImpl implements ItemService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final TypeRepository typeRepository;
+    private final UrlImgRepository urlImgRepository;
 
     ItemServiceImpl(ItemRepository itemRepository,
                     ProductRepository productRepository,
                     TypeRepository typeRepository,
-                    UserRepository userRepository){
+                    UserRepository userRepository, UrlImgRepository urlImgRepository){
         this.itemRepository = itemRepository;
         this.productRepository = productRepository;
         this.typeRepository = typeRepository;
         this.userRepository = userRepository;
+        this.urlImgRepository = urlImgRepository;
     }
 
 
@@ -46,7 +46,8 @@ public class ItemServiceImpl implements ItemService {
                 return null;
             }
             logger.info("find by user: " + username);
-            return new ItemResponse(item);
+
+            return new ItemResponse(item, buildImgList(item.getProduct().getId()));
         } catch (Exception e) {
             logger.info("Find error: " + e);
             return null;
@@ -63,7 +64,7 @@ public class ItemServiceImpl implements ItemService {
             User user = userRepository.findUserByUsername(username);
             List<Item> items = itemRepository.findAllByUserIdAndOrderId(user.getId(), null);
             for(Item item : items) {
-                itemResponses.add(new ItemResponse(item));
+                itemResponses.add(new ItemResponse(item, buildImgList(item.getProduct().getId())));
             }
             return itemResponses;
         } catch (Exception e) {
@@ -80,7 +81,7 @@ public class ItemServiceImpl implements ItemService {
             User user = userRepository.findUserByUsername(username);
             List<Item> items = itemRepository.findAllByUserIdAndOrderId(user.getId(), id);
             for(Item item : items) {
-                itemResponses.add(new ItemResponse(item));
+                itemResponses.add(new ItemResponse(item, buildImgList(item.getProduct().getId())));
             }
             return itemResponses;
         } catch (Exception e) {
@@ -120,7 +121,8 @@ public class ItemServiceImpl implements ItemService {
                 item.setType(type);
                 item.setTotalPrice(item.getProduct().getPrice() * item.getQuantity());
 
-                return new ItemResponse(itemRepository.save(item));
+
+                return new ItemResponse(itemRepository.save(item), buildImgList(item.getProduct().getId()));
             }
             return null;
 
@@ -167,15 +169,29 @@ public class ItemServiceImpl implements ItemService {
                 item.setType(type);
                 item.setTotalPrice(createItemRequest.getQuantity() * product.getPrice());
                 item.setUser(user);
-                return new ItemResponse(itemRepository.save(item));
+                return new ItemResponse(itemRepository.save(item), buildImgList(item.getProduct().getId()));
             } else {
                 itemExist.setQuantity(itemExist.getQuantity() + createItemRequest.getQuantity());
                 itemExist.setTotalPrice(itemExist.getQuantity() * product.getPrice());
-                return new ItemResponse(itemRepository.save(itemExist));
+                return new ItemResponse(itemRepository.save(itemExist), buildImgList(itemExist.getProduct().getId()));
             }
         } catch (Exception e) {
             logger.info("add item error: " + e);
             return null;
         }
+    }
+
+
+    private List<UrlImgResponse> buildImgList(Integer productId){
+        List<UrlImg> urlImg= urlImgRepository.findAllByProductId(productId);
+        List<UrlImgResponse> listImgResponse= new ArrayList<>();
+
+        if(urlImg != null) {
+            for(UrlImg urlImg1:urlImg)
+            {
+                listImgResponse.add(new UrlImgResponse(urlImg1));
+            }
+        }
+        return  listImgResponse;
     }
 }
