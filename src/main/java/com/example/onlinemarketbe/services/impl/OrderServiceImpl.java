@@ -32,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
     SalesRepository salesRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    UrlImgRepository urlImgRepository;
 
     @Override
     public ResponseEntity<?> createOrder(String username, CreateOrderRequest createOrderRequest)
@@ -160,6 +162,10 @@ public class OrderServiceImpl implements OrderService {
                             infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                             infoProduct.setNumberProduct(item.getQuantity());
                             infoProduct.setNameProduct(item.getProduct().getName());
+                            UrlImg urlImg= urlImgRepository.findUrlImgByProductId(item.getProduct().getId());
+                            if(urlImg!=null) {
+                                infoProduct.setUrl(urlImg.getUrl());
+                            }
                             infoProduct.setPrice(item.getProduct().getPrice());
                             infoProducts.add(infoProduct);
 
@@ -209,6 +215,10 @@ public class OrderServiceImpl implements OrderService {
                             } infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                             infoProduct.setNumberProduct(item.getQuantity());
                             infoProduct.setNameProduct(item.getProduct().getName());
+                            UrlImg urlImg= urlImgRepository.findUrlImgByProductId(item.getProduct().getId());
+                            if(urlImg!=null) {
+                                infoProduct.setUrl(urlImg.getUrl());
+                            }
                             infoProduct.setPrice(item.getProduct().getPrice());
                             infoProducts.add(infoProduct);
 
@@ -262,6 +272,10 @@ public class OrderServiceImpl implements OrderService {
                         infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
+                        UrlImg urlImg= urlImgRepository.findUrlImgByProductId(item.getProduct().getId());
+                        if(urlImg!=null) {
+                            infoProduct.setUrl(urlImg.getUrl());
+                        }
                         infoProduct.setPrice(item.getProduct().getPrice());
                         infoProducts.add(infoProduct);
 
@@ -314,6 +328,10 @@ public class OrderServiceImpl implements OrderService {
                         } infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
+                        UrlImg urlImg= urlImgRepository.findUrlImgByProductId(item.getProduct().getId());
+                        if(urlImg!=null) {
+                            infoProduct.setUrl(urlImg.getUrl());
+                        }
                         infoProduct.setPrice(item.getProduct().getPrice());
                         infoProducts.add(infoProduct);
 
@@ -364,6 +382,10 @@ public class OrderServiceImpl implements OrderService {
                         } infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
+                        UrlImg urlImg= urlImgRepository.findUrlImgByProductId(item.getProduct().getId());
+                        if(urlImg!=null) {
+                            infoProduct.setUrl(urlImg.getUrl());
+                        }
                         infoProduct.setPrice(item.getProduct().getPrice());
                         infoProducts.add(infoProduct);
 
@@ -417,6 +439,10 @@ public class OrderServiceImpl implements OrderService {
                         }infoProduct.setNameShop(item.getProduct().getUser().getUsername());
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
+                        UrlImg urlImg= urlImgRepository.findUrlImgByProductId(item.getProduct().getId());
+                        if(urlImg!=null) {
+                            infoProduct.setUrl(urlImg.getUrl());
+                        }
                         infoProduct.setPrice(item.getProduct().getPrice());
                         infoProducts.add(infoProduct);
 
@@ -471,6 +497,10 @@ public class OrderServiceImpl implements OrderService {
                         infoProduct.setNumberProduct(item.getQuantity());
                         infoProduct.setNameProduct(item.getProduct().getName());
                         infoProduct.setPrice(item.getProduct().getPrice());
+                        UrlImg urlImg= urlImgRepository.findUrlImgByProductId(item.getProduct().getId());
+                        if(urlImg!=null) {
+                            infoProduct.setUrl(urlImg.getUrl());
+                        }
                         infoProducts.add(infoProduct);
 
                     }
