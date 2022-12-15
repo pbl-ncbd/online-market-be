@@ -29,6 +29,7 @@ private  String nameShop;
     public ProductResponse(Product product){
         this.id = product.getId();
         this.name = product.getName();
+        this.quantity=product.getQuantity();
         this.price = product.getPrice();
         this.description = product.getDescription();
         this.status = product.isStatus();

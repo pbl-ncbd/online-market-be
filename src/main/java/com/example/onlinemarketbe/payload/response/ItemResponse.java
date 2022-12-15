@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 
 
 @Getter
@@ -22,7 +23,9 @@ public class ItemResponse {
 
     TypeResponse type;
 
-    public ItemResponse(Item item){
+    private List<UrlImgResponse> urlImgList;
+
+    public ItemResponse(Item item, List<UrlImgResponse> urlImgList){
         this.id = item.getId();
         this.userId = item.getUser().getId();
         this.totalPrice = item.getTotalPrice();
@@ -32,6 +35,8 @@ public class ItemResponse {
             this.type = null;
         } else
         this.type = new TypeResponse(item.getType());
+        this.urlImgList = urlImgList;
+
     }
 
 }
