@@ -65,7 +65,9 @@ public class ImgServiceImpl implements ImgService {
                     .destroy(id,
                             ObjectUtils.emptyMap());
             UrlImg urlImg= urlImgRepository.findUrlImgByUrl(id);
-            urlImgRepository.delete(urlImg);
+            if(urlImg!=null) {
+                urlImgRepository.delete(urlImg);
+            }
 
             return true;
         } catch (Exception ex) {

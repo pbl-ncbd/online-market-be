@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface UrlImgRepository extends JpaRepository<UrlImg,Integer> {
     public List<UrlImg> findAllByProductId(int id);
+    public UrlImg findUrlImgByProductId(int id);
     public UrlImg findUrlImgByUrl(String id);
 }

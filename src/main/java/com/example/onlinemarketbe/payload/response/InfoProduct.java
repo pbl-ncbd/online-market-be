@@ -14,5 +14,6 @@ public class InfoProduct {
     private String nameShop;
     private int numberProduct;
     private double price;
+    private String url;
 
 }
